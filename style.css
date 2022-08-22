@@ -16,4 +16,19 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 900;
 }
 
+#table-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: rgb(43, 59, 36);
+  color: aliceblue;
+  width: 800px;
+}
 
+#table {
+  width: 100%;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  text-align: center;
+  padding: 16px;
+}
