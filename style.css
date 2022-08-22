@@ -1,0 +1,19 @@
+
+@font-face { 
+	font-family: 'Raleway'; 
+	src: url('./assets/Raleway.ttf'); 
+}
+
+body {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  background-color: azure;
+  color: rgb(44, 45, 46);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Raleway';
+  color: rgb(87, 0, 0);
+  font-weight: 900;
+}
+
+
