@@ -19,7 +19,8 @@ const storePrototype = {
     const temp = [];
     for (i = 0; i < hours.length - 1; i++) {
       let sales = Math.floor((Math.random() * (this.max - this.min + 1) + this.min) * this.avg * traffic[i]);
-      workers.push(Math.ceil(sales / 20));
+      const worker = Math.ceil(sales / 20);
+      workers.push(worker > 1 ? worker : 2); //min of 2 workers per shift
       temp.push(sales);
       total += sales;
     }
@@ -28,6 +29,21 @@ const storePrototype = {
     this.workers = workers;
     this.dailyTotal = total;
     this.projection = temp;
+  },
+
+  render() {
+    const table = $('sales-table');
+
+    let row = _('tr');
+    row.innerHTML += `<b>${this.name}</b>`; //populate location column
+
+    let i;
+    for (i in this.projection) {
+      // console.log(`store: ${store.name}; i = ${i}`);
+      row.innerHTML += `<td>${this.projection[i]}</td>`;
+      totalHourlySales[i] += this.projection[i];
+    }
+    table.appendChild(row);
   }
 };
 
@@ -45,7 +61,6 @@ const stores = [Seattle, Tokyo, Dubai, Paris, Lima];
 
 displaySales();
 displayStaff();
-
 
 // create the array of hours
 function createHours(open, close) {
@@ -98,6 +113,7 @@ function displaySales() {
   while (tab.firstChild) {
     tab.removeChild(tab.firstChild);
   }
+  totalHourlySales.fill(0);
 
   const colgroup = _('colgroup');
   const colLocations = _('col');
@@ -112,37 +128,70 @@ function displaySales() {
   colgroup.appendChild(colValues);
   colgroup.appendChild(colTotals);
 
-  // create headings and totals rows with first column elements
-  const headings = _('tr');
-  const totals = _('tr');
-  headings.innerHTML = '<th>Location</th>';
-  totals.innerHTML = '<td><b>Totals</b></td>';
-  totalHourlySales.fill(0);
-
-  // populate data rows
+  renderColgroup();
+  renderHeading();
   let store;
   for (store of stores) {
-    let row = _('tr');
-    row.innerHTML += `<b>${store.name}</b>`; //populate location column
+    store.render();
+    // row.innerHTML += `<b>${store.name}</b>`; //populate location column
 
-    let i;
-    for (i in store.projection) {
-      // console.log(`store: ${store.name}; i = ${i}`);
-      row.innerHTML += `<td>${store.projection[i]}</td>`;
-      totalHourlySales[i] += store.projection[i];
-    }
-    tab.appendChild(row);
+    // let i;
+    // for (i in store.projection) {
+    //   // console.log(`store: ${store.name}; i = ${i}`);
+    //   row.innerHTML += `<td>${store.projection[i]}</td>`;
+    //   totalHourlySales[i] += store.projection[i];
+    // }
+    // tab.appendChild(row);
   }
+  renderTotals();
+}
 
-  // populate headings and totals rows
-  let j;
-  for (j in hours) {
-    headings.innerHTML += `<th>${hours[j]}</th>`;
-    totals.innerHTML += `<td>${totalHourlySales[j]}</td>`;
+
+// insert colgroup element
+function renderColgroup() {
+  const tab = $('sales-table');
+  const colgroup = _('colgroup');
+  const colLocations = _('col');
+  const colValues = _('col');
+  const colTotals = _('col');
+
+  colLocations.setAttribute('id', 'locations');
+  colValues.setAttribute('span', '14');
+  colValues.setAttribute('class', 'table-values');
+  colTotals.setAttribute('id', 'daily-totals');
+  colgroup.appendChild(colLocations);
+  colgroup.appendChild(colValues);
+  colgroup.appendChild(colTotals);
+
+  tab.appendChild(colgroup);
+}
+
+
+// insert table headings row
+function renderHeading() {
+  const tab = $('sales-table');
+  const headings = _('tr');
+  headings.innerHTML = '<th>Location</th>';
+
+  let i;
+  for (i in hours) {
+    headings.innerHTML += `<th>${hours[i]}</th>`;
+  }
+  tab.appendChild(headings);
+}
+
+
+// insert table totals row
+function renderTotals() {
+  const tab = $('sales-table');
+  const totals = _('tr');
+  totals.innerHTML = '<th>Total</th>';
+
+  let i;
+  for (i in hours) {
+    totals.innerHTML += `<th>${totalHourlySales[i]}</th>`;
   }
   tab.appendChild(totals);
-  tab.prepend(headings);
-  tab.prepend(colgroup);
 }
 
 
