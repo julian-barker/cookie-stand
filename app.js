@@ -37,8 +37,6 @@ const Paris = new Store('Paris', 20, 38, 2.3);
 const Lima = new Store('Lima', 2, 16, 4.6);
 
 const stores = [Seattle, Tokyo, Dubai, Paris, Lima];
-// console.log(stores, lookup);
-// console.log(Seattle);
 
 display();
 

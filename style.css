@@ -11,6 +11,14 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
+}
+
+footer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -114,4 +122,27 @@ td {
   border: 4px solid salmon;
   border-radius: 24px;
   padding: 48px;
+}
+
+footer section {
+  width: 400px;
+}
+
+footer div {
+  display: flex;
+  justify-content: space-between;
+}
+
+footer ul {
+  list-style-type: none;
+  margin-left: 0;
+  padding-left: 0;;
+}
+
+#contact-key {
+  text-align: left;
+}
+
+#contact-value {
+  text-align: right;
 }
