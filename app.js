@@ -296,8 +296,6 @@ function addInputField(container, value) {
 
 // on submission, alters store params with input values and reruns projection for that Store
 function update() {
-  let container = $('sales-container');
-  let popup = $('popup');
   let select = $('store-select');
   let min = $('min');
   let max = $('max');
@@ -313,7 +311,6 @@ function update() {
   displaySales();
   exitUpdate();
 }
-
 
 function exitUpdate() {
   $('sales-container').removeChild($('popup-blur'));
