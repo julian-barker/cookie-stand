@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style2.css">
-  <script src="app2.js" defer></script>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
   <title>Cookie Sales</title>
 </head>
 <body>
@@ -17,21 +17,19 @@
   <main>
     <h1>This is Main</h1>
     <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore ullam recusandae rerum iste aliquid nihil, voluptatibus cupiditate illum laudantium, tenetur aspernatur, tempore suscipit optio saepe pariatur aperiam molestias vero in? -->
-    
-    <!-- <div id="table-container">
-      <h2>Sales Table</h2>
-      <table id="table">
-        <colgroup>
-          <col class="times">
-        </colgroup>
-      </table>
-    </div> -->
-    <div id="sales-tracker-2"></div>
-    <div id="sales-update">
-      <button id="choose-store" onclick="chooseStore()">Update Store Parameters</button>
+    <div class="container">
+      <div id="table-container">
+        <h2>Sales Table</h2>
+        <table id="table">
+          <colgroup>
+            <col id="locations">
+            <col span="15" id="cookie-values">
+          </colgroup>
+        </table>
+        <button id="choose-store" onclick="chooseStore()">Update Store Parameters</button>
+      </div>
+      <!-- <div id="sales-tracker-2"></div> -->
     </div>
-    
-    
   </main>
   <footer>
     <section>

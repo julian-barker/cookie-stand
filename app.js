@@ -2,36 +2,16 @@ function $(x) {
   return document.getElementById(x);
 }
 
-class Store {
-  constructor (name, min, max, avgSales) {
-    this.name = name;
-    this.min = min;
-    this.max = max;
-    this.avg = avgSales;
-    this.sim = [];
-    this.simulate();
-  }
-
-  getSim() {
-    return this.sim;
-  }
-
-  simulate() {
-    let i;
-    let total = 0;
-    const temp = [];
-    for (i = 6; i < 20; i++) {
-      let t = (i + 11) % 12 + 1;
-      let m = Math.floor(i/12) ? 'pm' : 'am';
-      let sales = Math.floor((Math.random() * (this.max - this.min + 1) + this.min) * this.avg);
-      temp.push(`${t}${m}: ${sales} cookies`);
-      total += sales;
-    }
-    temp.push(`Total: ${total} cookies`);
-    this.sim = temp;
-    this.getSim();
-  }
+function _(x) {
+  return document.createElement(x);
 }
+
+const lookup = new Map();
+const opening = 6;
+const closing = 20;
+const traffic = [0.5, 0.75, 1.0, 0.6, 0.8, 1.0, 0.7, 0.4, 0.6, 0.9, 0.7, 0.5, 0.3, 0.4, 0.6];
+const hours = createHours(opening, closing);
+const hrlyTotals = new Array(closing - opening + 1).fill(0);
 
 const Seattle = new Store('Seattle', 23, 65, 6.3);
 const Tokyo = new Store('Tokyo', 3, 24, 1.2);
@@ -40,67 +20,116 @@ const Paris = new Store('Paris', 20, 38, 2.3);
 const Lima = new Store('Lima', 2, 16, 4.6);
 
 const stores = [Seattle, Tokyo, Dubai, Paris, Lima];
+console.log(stores, lookup);
 
-function display() {
+display();
+
+
+
+
+
+// create the array of hours
+function createHours(open, close) {
   let i;
-  const tab = $('table');
-  let headings = document.createElement('tr');
-  headings.innerHTML += '<th>Time</th>';
-  for (let store of stores){
-    headings.innerHTML += `<th>${store.name}</th>`;
-  }
-  tab.appendChild(headings);
-  for (i = 6; i < 20; i++) {
+  const temp = [];
+  for (i = open; i < close; i++) {
     let t = (i + 11) % 12 + 1;
     let m = Math.floor(i/12) ? 'pm' : 'am';
-    let row = document.createElement('tr');
-    row.innerHTML += `<td>${t}${m}</td>`;
-    for (let store of stores){
-      let str = store.sim[i-6];
-      console.log(str);
-      let cookies = str.slice(str.search(': ') + 2);
-      console.log(cookies);
-      row.innerHTML += `<td>${cookies}</td>`;
+    temp.push(`${t}${m}`);
+  }
+  temp.push('Daily Total');
+  return temp;
+}
+
+
+
+// constructor function for Stores
+function Store(name, min, max, avg) {
+  const store = {};
+  store.name = name;
+  store.min = min;
+  store.max = max;
+  store.avg = avg;
+  store.projection = [];
+  store.projection2 = [];
+  store.dailyTotal = 0;
+  store.project = function() {
+    let i;
+    let total = 0;
+    const temp = [];
+    const temp2 = [];
+    for (i = 0; i < hours.length - 1; i++) {
+      let sales = Math.floor((Math.random() * (this.max - this.min + 1) + this.min) * this.avg * traffic[i]);
+      temp.push(`${hours[i]}: ${sales} cookies`);
+      temp2.push(sales);
+      total += sales;
+    }
+    temp.push(`Total: ${total} cookies`);
+    temp2.push(total);
+    this.dailyTotal = total;
+    this.projection = temp;
+    this.projection2 = temp2;
+  };
+  store.project();
+  lookup.set(name, store);
+  return store;
+}
+
+
+
+// displays Stores as a table
+function display() {
+  const tab = $('table');
+  while (tab.firstChild) {
+    tab.removeChild(tab.firstChild);
+  }
+
+  const colgroup = _('colgroup');
+  const colLocations = _('col');
+  const colValues = _('col');
+  colLocations.setAttribute('id', 'locations');
+  colValues.setAttribute('span', '15');
+  colValues.setAttribute('id', 'cookie-values');
+  colgroup.appendChild(colLocations);
+  colgroup.appendChild(colValues);
+
+  const headings = _('tr');
+  const totals = _('tr');
+  headings.innerHTML += '<th>Location</th>';
+  totals.innerHTML = '<td><b>Totals</b></td>';
+  hrlyTotals.fill(0);
+
+  let store;
+  for (store of stores) {
+    let row = _('tr');
+    row.innerHTML += `<b>${store.name}</b>`;
+
+    let i;
+    for (i in store.projection2) {
+      row.innerHTML += `<td>${store.projection2[i]}</td>`;
+      hrlyTotals[i] += store.projection2[i];
     }
     tab.appendChild(row);
   }
-  let totals = document.createElement('tr');
-  totals.innerHTML += '<td>Totals</td>';
-  for (let store of stores){
-    let str = store.sim[i-6];
-    console.log(str);
-    let cookies = str.slice(str.search(': ') + 2);
-    console.log(cookies);
-    totals.innerHTML += `<td>${cookies}</td>`;
+
+  let j;
+  for (j in hours) {
+    headings.innerHTML += `<th>${hours[j]}</th>`;
+    totals.innerHTML += `<td>${hrlyTotals[j]}</td>`;
   }
   tab.appendChild(totals);
+  tab.prepend(headings);
+  tab.prepend(colgroup);
 }
 
-// display();
-
-// function display2(store) {
-//   let location = store.name;
-//   console.log(location.toLowerCase());
-//   let el = $(location.toLowerCase());
-//   for (let hour of store.sim) {
-//     el.innerHTML += `<li>${hour}</li>`;
-//   }
-// }
-
-// for (let store of stores) {
-//   display2(store);
-// }
 
 
+// brings up Store selection menu as popup on button push
 function chooseStore() {
-  // if ($('popup') === null) {
-  //   return;
-  // }
-
   if ($('popup')) {
     return;
   }
-  let el = $('sales-update');
+  let el = $('table-container');
   let popup = document.createElement('div');
   let select = document.createElement('select');
   let option = document.createElement('option');
@@ -128,9 +157,8 @@ function chooseStore() {
   select.addEventListener('change', input);
 }
 
-
+// on selection, present input fields with default values to update Store params
 function input() {
-  // let select = $('store-select');
   if (!$('store-select').value) {
     return;
   }
@@ -148,15 +176,17 @@ function input() {
   el.appendChild(submit);
 }
 
-
+// helper function to add an input element
 function addInputField(el, value) {
   let div = document.createElement('div');
   let label = document.createElement('label');
   let input = document.createElement('input');
+  let store = lookup.get($('store-select').value);
 
   if ($(`${value}-container`)) {
     el.removeChild($(`${value}-container`));
   }
+
   div.setAttribute('id', `${value}-container`);
 
   label.setAttribute('for', value);
@@ -165,6 +195,7 @@ function addInputField(el, value) {
   input.setAttribute('type', 'number');
   input.setAttribute('id', value);
   input.setAttribute('name', value);
+  input.setAttribute('value', store[value]);
 
   div.appendChild(label);
   div.appendChild(input);
@@ -172,9 +203,9 @@ function addInputField(el, value) {
 
 }
 
-
+// on submission, alters store params with input values and reruns projection for that Store
 function update() {
-  let el = $('sales-update');
+  let el = $('table-container');
   let popup = $('popup');
   let select = $('store-select');
   let min = $('min');
@@ -189,10 +220,42 @@ function update() {
   store.avg = parseInt(avg.value);
   // console.log(min, max, avg);
   // console.log(store.min, store,max, store.avg);
-  project(store);
+  store.project();
   display();
 
   el.removeChild(popup);
 }
 // console.log(seattle);
 
+
+
+// class Store {
+//   constructor (name, min, max, avgSales) {
+//     this.name = name;
+//     this.min = min;
+//     this.max = max;
+//     this.avg = avgSales;
+//     this.sim = [];
+//     this.simulate();
+//   }
+
+//   getSim() {
+//     return this.sim;
+//   }
+
+//   simulate() {
+//     let i;
+//     let total = 0;
+//     const temp = [];
+//     for (i = 6; i < 20; i++) {
+//       let t = (i + 11) % 12 + 1;
+//       let m = Math.floor(i/12) ? 'pm' : 'am';
+//       let sales = Math.floor((Math.random() * (this.max - this.min + 1) + this.min) * this.avg);
+//       temp.push(`${t}${m}: ${sales} cookies`);
+//       total += sales;
+//     }
+//     temp.push(`Total: ${total} cookies`);
+//     this.sim = temp;
+//     this.getSim();
+//   }
+// }
