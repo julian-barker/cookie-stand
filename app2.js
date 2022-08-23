@@ -74,4 +74,81 @@ for (let store of stores) {
   el.appendChild(div);
 }
 
-console.log(seattle);
+
+function chooseStore() {
+  // if ($('popup') === null) {
+  //   return;
+  // }
+  let el = $('sales-update');
+  let popup = document.createElement('div');
+  popup.setAttribute('id', 'popup');
+  let select = document.createElement('select');
+  select.setAttribute('name', 'store');
+  select.setAttribute('id', 'store-select');
+  select.innerHTML = 'Which store would you like to update?';
+
+  let option = document.createElement('option');
+  option.setAttribute('value', '');
+  option.innerHTML = '-- Please Select an Option From Below --';
+  select.appendChild(option);
+
+  let store;
+  for (store of stores) {
+    let option = document.createElement('option');
+    option.setAttribute('value', `${store.name}`);
+    option.innerHTML = store.name;
+    select.appendChild(option);
+  }
+  popup.appendChild(select);
+  el.appendChild(popup);
+}
+
+function update() {
+  let el = $('popup');
+
+  addInputField(el, 'min');
+  addInputField(el, 'max');
+  addInputField(el, 'avg');
+
+
+  // let minLabel = document.createElement('label');
+  // minLabel.setAttribute('for', 'min');
+  // let minInput = document.createElement('input');
+  // minInput.setAttribute('type', 'number');
+  // minInput.setAttribute('id', 'min');
+  // minInput.setAttribute('name', 'min');
+
+  // let maxLabel = document.createElement('label');
+  // maxLabel.setAttribute('for', 'max');
+  // let maxInput = document.createElement('input');
+  // maxInput.setAttribute('type', 'number');
+  // maxInput.setAttribute('id', 'max');
+  // maxInput.setAttribute('name', 'max');
+
+  // let avgLabel = document.createElement('label');
+  // avgLabel.setAttribute('for', 'avg');
+  // let avgInput = document.createElement('input');
+  // avgInput.setAttribute('type', 'number');
+  // avgInput.setAttribute('id', 'avg');
+  // avgInput.setAttribute('name', 'avg');
+
+}
+
+function addInputField(el, value) {
+  let div = document.createElement('div');
+  div.setAttribute('id', `${value}-container`);
+
+  let label = document.createElement('label');
+  label.setAttribute('for', value);
+
+  let input = document.createElement('input');
+  input.setAttribute('type', 'number');
+  input.setAttribute('id', value);
+  input.setAttribute('name', value);
+
+  div.appendChild(label);
+  div.appendChild(input);
+  el.appendChild(div);
+
+}
+// console.log(seattle);
