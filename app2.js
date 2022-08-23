@@ -3,7 +3,7 @@ function $(x) {
 }
 
 const seattle = {
-  name: 'seattle',
+  name: 'Seattle',
   min: 23,
   max: 65,
   avg: 6.3,
@@ -11,7 +11,7 @@ const seattle = {
 };
 
 const tokyo = {
-  name: 'tokyo',
+  name: 'Tokyo',
   min: 3,
   max: 24,
   avg: 1.2,
@@ -19,7 +19,7 @@ const tokyo = {
 };
 
 const dubai = {
-  name: 'dubai',
+  name: 'Dubai',
   min: 11,
   max: 38,
   avg: 3.7,
@@ -27,7 +27,7 @@ const dubai = {
 };
 
 const paris = {
-  name: 'paris',
+  name: 'Paris',
   min: 20,
   max: 38,
   avg: 2.3,
@@ -35,7 +35,7 @@ const paris = {
 };
 
 const lima = {
-  name: 'lima',
+  name: 'Lima',
   min: 2,
   max: 16,
   avg: 4.6,
@@ -43,10 +43,15 @@ const lima = {
 };
 
 const stores = [seattle, tokyo, dubai, paris, lima];
+const lookup = new Map();
+for (let store of stores) {
+  lookup.set(store.name, store);
+}
 
 function project(obj) {
   let i;
   let total = 0;
+  obj.arr = [];
   for (i = 6; i < 20; i++) {
     let t = (i + 11) % 12 + 1;
     let m = Math.floor(i/12) ? 'pm' : 'am';
@@ -58,27 +63,39 @@ function project(obj) {
   obj.arr.push(`Total: ${total} cookies`);
 }
 
+display();
 
-for (let store of stores) {
-  project(store);
+function display() {
   let el = $('sales-tracker-2');
-  let div = document.createElement('div');
-  div.innerHTML += `<h2>${store.name}</h2>`;
-  let ul = document.createElement('ul');
-  for (let hr of store.arr) {
-    let li = document.createElement('li');
-    li.innerHTML = hr;
-    ul.appendChild(li);
+  while (el.firstChild) {
+    el.removeChild(el.firstChild);
   }
-  div.appendChild(ul);
-  el.appendChild(div);
+
+  for (let store of stores) {
+    project(store);
+    let div = document.createElement('div');
+    div.innerHTML += `<h2>${store.name}</h2>`;
+    let ul = document.createElement('ul');
+    for (let hr of store.arr) {
+      let li = document.createElement('li');
+      li.innerHTML = hr;
+      ul.appendChild(li);
+    }
+    div.appendChild(ul);
+    el.appendChild(div);
+  }
 }
+
 
 
 function chooseStore() {
   // if ($('popup') === null) {
   //   return;
   // }
+
+  if ($('popup')) {
+    return;
+  }
   let el = $('sales-update');
   let popup = document.createElement('div');
   let select = document.createElement('select');
@@ -104,56 +121,77 @@ function chooseStore() {
   popup.appendChild(select);
   el.appendChild(popup);
 
-  popup.addEventListener()
+  select.addEventListener('change', input);
 }
 
-function update() {
+
+function input() {
+  // let select = $('store-select');
+  if (!$('store-select').value) {
+    return;
+  }
+
   let el = $('popup');
+  let submit = document.createElement('button');
+
+  submit.setAttribute('id','submit-update');
+  submit.setAttribute('onclick', 'update()');
+  submit.innerHTML = 'Update Values';
 
   addInputField(el, 'min');
   addInputField(el, 'max');
   addInputField(el, 'avg');
-
-
-  // let minLabel = document.createElement('label');
-  // minLabel.setAttribute('for', 'min');
-  // let minInput = document.createElement('input');
-  // minInput.setAttribute('type', 'number');
-  // minInput.setAttribute('id', 'min');
-  // minInput.setAttribute('name', 'min');
-
-  // let maxLabel = document.createElement('label');
-  // maxLabel.setAttribute('for', 'max');
-  // let maxInput = document.createElement('input');
-  // maxInput.setAttribute('type', 'number');
-  // maxInput.setAttribute('id', 'max');
-  // maxInput.setAttribute('name', 'max');
-
-  // let avgLabel = document.createElement('label');
-  // avgLabel.setAttribute('for', 'avg');
-  // let avgInput = document.createElement('input');
-  // avgInput.setAttribute('type', 'number');
-  // avgInput.setAttribute('id', 'avg');
-  // avgInput.setAttribute('name', 'avg');
-
+  el.appendChild(submit);
 }
+
 
 function addInputField(el, value) {
   let div = document.createElement('div');
   let label = document.createElement('label');
   let input = document.createElement('input');
+  let store = lookup.get($('store-select').value);
+  console.log(store);
+
+  if ($(`${value}-container`)) {
+    el.removeChild($(`${value}-container`));
+  }
 
   div.setAttribute('id', `${value}-container`);
 
   label.setAttribute('for', value);
+  label.innerHTML = `${value}:`;
 
   input.setAttribute('type', 'number');
   input.setAttribute('id', value);
   input.setAttribute('name', value);
+  input.setAttribute('value', store[value]);
 
   div.appendChild(label);
   div.appendChild(input);
   el.appendChild(div);
 
+}
+
+
+function update() {
+  let el = $('sales-update');
+  let popup = $('popup');
+  let select = $('store-select');
+  let min = $('min');
+  let max = $('max');
+  let avg = $('avg');
+
+  let store = lookup.get(select.value);
+  // console.log(store);
+
+  store.min = parseInt(min.value);
+  store.max = parseInt(max.value);
+  store.avg = parseInt(avg.value);
+  // console.log(min, max, avg);
+  // console.log(store.min, store,max, store.avg);
+  project(store);
+  display();
+
+  el.removeChild(popup);
 }
 // console.log(seattle);

@@ -35,9 +35,30 @@ h1, h2, h3, h4, h5, h6 {
   width: fit-content;
 }
 
+#sales-tracker-2 div {
+  background-color: rgb(255, 193, 168);
+  border: 2px dashed darkolivegreen;
+  border-radius: 8px;
+  margin: 8px;
+}
+
 #sales-tracker-2 ul {
   list-style-type: none;
   padding: 0;
   margin-left: 16px;
   margin-right: 16px;
+}
+
+#popup {
+  position: fixed;
+  height: 150px;
+  width: 300px;
+  top: 50%;
+  left: 50%;
+  margin-top: -75px;
+  margin-left: -150px;
+  background-color: burlywood;
+  border: 4px solid salmon;
+  border-radius: 24px;
+  padding: 48px;
 }

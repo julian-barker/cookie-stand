@@ -76,17 +76,123 @@ function display() {
   tab.appendChild(totals);
 }
 
-display();
+// display();
 
-function display2(store) {
-  let location = store.name;
-  console.log(location.toLowerCase());
-  let el = $(location.toLowerCase());
-  for (let hour of store.sim) {
-    el.innerHTML += `<li>${hour}</li>`;
+// function display2(store) {
+//   let location = store.name;
+//   console.log(location.toLowerCase());
+//   let el = $(location.toLowerCase());
+//   for (let hour of store.sim) {
+//     el.innerHTML += `<li>${hour}</li>`;
+//   }
+// }
+
+// for (let store of stores) {
+//   display2(store);
+// }
+
+
+function chooseStore() {
+  // if ($('popup') === null) {
+  //   return;
+  // }
+
+  if ($('popup')) {
+    return;
   }
+  let el = $('sales-update');
+  let popup = document.createElement('div');
+  let select = document.createElement('select');
+  let option = document.createElement('option');
+  let store;
+
+  popup.setAttribute('id', 'popup');
+
+  select.setAttribute('name', 'store');
+  select.setAttribute('id', 'store-select');
+  select.innerHTML = 'Which store would you like to update?';
+
+  option.setAttribute('value', '');
+  option.innerHTML = '-- Please Select an Option From Below --';
+  select.appendChild(option);
+
+  for (store of stores) {
+    let option = document.createElement('option');
+    option.setAttribute('value', `${store.name}`);
+    option.innerHTML = store.name;
+    select.appendChild(option);
+  }
+  popup.appendChild(select);
+  el.appendChild(popup);
+
+  select.addEventListener('change', input);
 }
 
-for (let store of stores) {
-  display2(store);
+
+function input() {
+  // let select = $('store-select');
+  if (!$('store-select').value) {
+    return;
+  }
+
+  let el = $('popup');
+  let submit = document.createElement('button');
+
+  submit.setAttribute('id','submit-update');
+  submit.setAttribute('onclick', 'update()');
+  submit.innerHTML = 'Update Values';
+
+  addInputField(el, 'min');
+  addInputField(el, 'max');
+  addInputField(el, 'avg');
+  el.appendChild(submit);
 }
+
+
+function addInputField(el, value) {
+  let div = document.createElement('div');
+  let label = document.createElement('label');
+  let input = document.createElement('input');
+
+  if ($(`${value}-container`)) {
+    el.removeChild($(`${value}-container`));
+  }
+  div.setAttribute('id', `${value}-container`);
+
+  label.setAttribute('for', value);
+  label.innerHTML = `${value}:`;
+
+  input.setAttribute('type', 'number');
+  input.setAttribute('id', value);
+  input.setAttribute('name', value);
+
+  div.appendChild(label);
+  div.appendChild(input);
+  el.appendChild(div);
+
+}
+
+
+function update() {
+  let el = $('sales-update');
+  let popup = $('popup');
+  let select = $('store-select');
+  let min = $('min');
+  let max = $('max');
+  let avg = $('avg');
+
+  let store = lookup.get(select.value);
+  // console.log(store);
+
+  store.min = parseInt(min.value);
+  store.max = parseInt(max.value);
+  store.avg = parseInt(avg.value);
+  // console.log(min, max, avg);
+  // console.log(store.min, store,max, store.avg);
+  project(store);
+  display();
+
+  el.removeChild(popup);
+}
+// console.log(seattle);
+
