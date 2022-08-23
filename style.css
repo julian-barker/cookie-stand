@@ -124,6 +124,15 @@ td {
   padding: 48px;
 }
 
+#popup-blur {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(10px);
+}
+
 footer section {
   width: 400px;
 }

@@ -146,15 +146,18 @@ function chooseStore() {
   if ($('popup')) {
     return;
   }
-  let el = $('table-container');
+
+  let container = $('table-container');
+  let blur = _('div');
   let popup = _('div');
   let exit = _('button');
   let select = _('select');
   let option = _('option');
   let store;
 
-  popup.setAttribute('id', 'popup');
 
+  blur.setAttribute('id', 'popup-blur');
+  popup.setAttribute('id', 'popup');
 
   exit.setAttribute('id','exit-update');
   exit.setAttribute('onclick', 'exitUpdate()');
@@ -175,10 +178,10 @@ function chooseStore() {
     select.appendChild(option);
   }
 
-
   popup.appendChild(select);
   popup.appendChild(exit);
-  el.appendChild(popup);
+  blur.appendChild(popup);
+  container.appendChild(blur);
 
   select.addEventListener('change', input);
 }
@@ -189,6 +192,7 @@ function input() {
     return;
   }
 
+  let blur = $('popup-blur');
   let popup = $('popup');
   popup.removeChild($('exit-update'));
   let submit = _('button');
@@ -238,7 +242,7 @@ function addInputField(el, value) {
 
 // on submission, alters store params with input values and reruns projection for that Store
 function update() {
-  let el = $('table-container');
+  let container = $('table-container');
   let popup = $('popup');
   let select = $('store-select');
   let min = $('min');
@@ -246,22 +250,19 @@ function update() {
   let avg = $('avg');
 
   let store = lookup.get(select.value);
-  // console.log(store);
 
   store.min = parseInt(min.value);
   store.max = parseInt(max.value);
   store.avg = parseInt(avg.value);
-  // console.log(min, max, avg);
-  // console.log(store.min, store,max, store.avg);
+
   store.project();
   display();
-
-  el.removeChild(popup);
+  exitUpdate();
 }
 
 
 function exitUpdate() {
-  $('table-container').removeChild($('popup'));
+  $('table-container').removeChild($('popup-blur'));
 }
 
 
