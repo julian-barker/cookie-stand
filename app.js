@@ -87,11 +87,14 @@ function display() {
   const colgroup = _('colgroup');
   const colLocations = _('col');
   const colValues = _('col');
+  const colTotals = _('col');
   colLocations.setAttribute('id', 'locations');
-  colValues.setAttribute('span', '15');
+  colValues.setAttribute('span', '14');
   colValues.setAttribute('id', 'cookie-values');
+  colTotals.setAttribute('id', 'daily-totals');
   colgroup.appendChild(colLocations);
   colgroup.appendChild(colValues);
+  colgroup.appendChild(colTotals);
 
   const headings = _('tr');
   const totals = _('tr');
