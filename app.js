@@ -1,10 +1,6 @@
-function $(x) {
-  return document.getElementById(x);
-}
 
-function _(x) {
-  return document.createElement(x);
-}
+const $ = (x) => {return document.getElementById(x);};
+const _ = (x) => {return document.createElement(x);};
 
 const lookup = new Map();
 const opening = 6;
@@ -13,6 +9,27 @@ const traffic = [0.5, 0.75, 1.0, 0.6, 0.8, 1.0, 0.7, 0.4, 0.6, 0.9, 0.7, 0.5, 0.
 const hours = createHours(opening, closing);
 const hrlyTotals = new Array(closing - opening + 1).fill(0);
 
+const storePrototype = {
+  project() {
+    let i;
+    let total = 0;
+    const temp = [];
+    for (i = 0; i < hours.length - 1; i++) {
+      let sales = Math.floor((Math.random() * (this.max - this.min + 1) + this.min) * this.avg * traffic[i]);
+      temp.push(sales);
+      total += sales;
+    }
+
+    temp.push(total);
+    this.dailyTotal = total;
+    this.projection = temp;
+  }
+};
+
+Object.setPrototypeOf(Store.prototype, storePrototype);
+// console.log (storePrototype);
+// console.log(Store);
+
 const Seattle = new Store('Seattle', 23, 65, 6.3);
 const Tokyo = new Store('Tokyo', 3, 24, 1.2);
 const Dubai = new Store('Dubai', 11, 38, 3.7);
@@ -20,12 +37,10 @@ const Paris = new Store('Paris', 20, 38, 2.3);
 const Lima = new Store('Lima', 2, 16, 4.6);
 
 const stores = [Seattle, Tokyo, Dubai, Paris, Lima];
-console.log(stores, lookup);
+// console.log(stores, lookup);
+// console.log(Seattle);
 
 display();
-
-
-
 
 
 // create the array of hours
@@ -42,39 +57,35 @@ function createHours(open, close) {
 }
 
 
-
 // constructor function for Stores
 function Store(name, min, max, avg) {
-  const store = {};
-  store.name = name;
-  store.min = min;
-  store.max = max;
-  store.avg = avg;
-  store.projection = [];
-  store.projection2 = [];
-  store.dailyTotal = 0;
-  store.project = function() {
-    let i;
-    let total = 0;
-    const temp = [];
-    const temp2 = [];
-    for (i = 0; i < hours.length - 1; i++) {
-      let sales = Math.floor((Math.random() * (this.max - this.min + 1) + this.min) * this.avg * traffic[i]);
-      temp.push(`${hours[i]}: ${sales} cookies`);
-      temp2.push(sales);
-      total += sales;
-    }
-    temp.push(`Total: ${total} cookies`);
-    temp2.push(total);
-    this.dailyTotal = total;
-    this.projection = temp;
-    this.projection2 = temp2;
-  };
-  store.project();
-  lookup.set(name, store);
-  return store;
-}
+  this.name = name;
+  this.min = min;
+  this.max = max;
+  this.avg = avg;
+  // store.projection = [];
+  // store.dailyTotal = 0;
 
+  // store.project = function() {
+  //   let i;
+  //   let total = 0;
+  //   const temp = [];
+  //   const temp2 = [];
+  //   for (i = 0; i < hours.length - 1; i++) {
+  //     let sales = Math.floor((Math.random() * (this.max - this.min + 1) + this.min) * this.avg * traffic[i]);
+  //     temp.push(sales);
+  //     total += sales;
+  //   }
+
+  //   temp.push(total);
+  //   this.dailyTotal = total;
+  //   this.projection = temp;
+  //   this.projection2 = temp2;
+  // };
+
+  this.project();
+  lookup.set(name, this);
+}
 
 
 // displays Stores as a table
@@ -88,6 +99,7 @@ function display() {
   const colLocations = _('col');
   const colValues = _('col');
   const colTotals = _('col');
+
   colLocations.setAttribute('id', 'locations');
   colValues.setAttribute('span', '14');
   colValues.setAttribute('id', 'cookie-values');
@@ -96,25 +108,29 @@ function display() {
   colgroup.appendChild(colValues);
   colgroup.appendChild(colTotals);
 
+  // create headings and totals rows with first column elements
   const headings = _('tr');
   const totals = _('tr');
   headings.innerHTML += '<th>Location</th>';
   totals.innerHTML = '<td><b>Totals</b></td>';
   hrlyTotals.fill(0);
 
+  // populate data rows
   let store;
   for (store of stores) {
     let row = _('tr');
-    row.innerHTML += `<b>${store.name}</b>`;
+    row.innerHTML += `<b>${store.name}</b>`; //populate location column
 
     let i;
-    for (i in store.projection2) {
-      row.innerHTML += `<td>${store.projection2[i]}</td>`;
-      hrlyTotals[i] += store.projection2[i];
+    for (i in store.projection) {
+      // console.log(`store: ${store.name}; i = ${i}`);
+      row.innerHTML += `<td>${store.projection[i]}</td>`;
+      hrlyTotals[i] += store.projection[i];
     }
     tab.appendChild(row);
   }
 
+  // populate headings and totals rows
   let j;
   for (j in hours) {
     headings.innerHTML += `<th>${hours[j]}</th>`;
@@ -133,10 +149,10 @@ function chooseStore() {
     return;
   }
   let el = $('table-container');
-  let popup = document.createElement('div');
-  let exit = document.createElement('button');
-  let select = document.createElement('select');
-  let option = document.createElement('option');
+  let popup = _('div');
+  let exit = _('button');
+  let select = _('select');
+  let option = _('option');
   let store;
 
   popup.setAttribute('id', 'popup');
@@ -155,7 +171,7 @@ function chooseStore() {
   select.appendChild(option);
 
   for (store of stores) {
-    let option = document.createElement('option');
+    let option = _('option');
     option.setAttribute('value', `${store.name}`);
     option.innerHTML = store.name;
     select.appendChild(option);
@@ -177,8 +193,8 @@ function input() {
 
   let popup = $('popup');
   popup.removeChild($('exit-update'));
-  let submit = document.createElement('button');
-  let exit = document.createElement('button');
+  let submit = _('button');
+  let exit = _('button');
 
   submit.setAttribute('id','submit-update');
   submit.setAttribute('onclick', 'update()');
@@ -197,9 +213,9 @@ function input() {
 
 // helper function to add an input element
 function addInputField(el, value) {
-  let div = document.createElement('div');
-  let label = document.createElement('label');
-  let input = document.createElement('input');
+  let div = _('div');
+  let label = _('label');
+  let input = _('input');
   let store = lookup.get($('store-select').value);
 
   if ($(`${value}-container`)) {
