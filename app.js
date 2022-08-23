@@ -21,7 +21,7 @@ class Store {
     let total = 0;
     const temp = [];
     for (i = 6; i < 20; i++) {
-      let t = i % 12;
+      let t = (i + 11) % 12 + 1;
       let m = Math.floor(i/12) ? 'pm' : 'am';
       let sales = Math.floor((Math.random() * (this.max - this.min + 1) + this.min) * this.avg);
       temp.push(`${t}${m}: ${sales} cookies`);
@@ -31,24 +31,7 @@ class Store {
     this.sim = temp;
     this.getSim();
   }
-
-  // update(min, max, avg) {
-  //   for (let arg of arguments) {
-  //     if (arg !== undefined) {
-  //       this[arg] = arg;
-  //     }
-  //   }
-  //   this.simulate();
-  //   return 'stats and simulation updated';
-  // }
 }
-
-
-// const Seattle2 = {
-//   min: 4,
-//   max: 7,
-//   avg: 7,
-// };
 
 const Seattle = new Store('Seattle', 23, 65, 6.3);
 const Tokyo = new Store('Tokyo', 3, 24, 1.2);
@@ -61,7 +44,6 @@ const stores = [Seattle, Tokyo, Dubai, Paris, Lima];
 function display() {
   let i;
   const tab = $('table');
-  let title = document.createElement('h2');
   let headings = document.createElement('tr');
   headings.innerHTML += '<th>Time</th>';
   for (let store of stores){
@@ -69,7 +51,7 @@ function display() {
   }
   tab.appendChild(headings);
   for (i = 6; i < 20; i++) {
-    let t = i % 12;
+    let t = (i + 11) % 12 + 1;
     let m = Math.floor(i/12) ? 'pm' : 'am';
     let row = document.createElement('tr');
     row.innerHTML += `<td>${t}${m}</td>`;
@@ -94,5 +76,17 @@ function display() {
   tab.appendChild(totals);
 }
 
-console.log(Seattle, Tokyo, Dubai, Paris, Lima);
 display();
+
+function display2(store) {
+  let location = store.name;
+  console.log(location.toLowerCase());
+  let el = $(location.toLowerCase());
+  for (let hour of store.sim) {
+    el.innerHTML += `<li>${hour}</li>`;
+  }
+}
+
+for (let store of stores) {
+  display2(store);
+}
