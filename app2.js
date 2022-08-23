@@ -150,7 +150,6 @@ function addInputField(el, value) {
   let label = document.createElement('label');
   let input = document.createElement('input');
   let store = lookup.get($('store-select').value);
-  console.log(store);
 
   if ($(`${value}-container`)) {
     el.removeChild($(`${value}-container`));
