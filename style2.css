@@ -1,7 +1,7 @@
 
 @font-face { 
-	font-family: 'Raleway'; 
-	src: url('./assets/Raleway.ttf'); 
+	font-family: 'Raleway';
+	src: url('./assets/Raleway.ttf');
 }
 
 body {
@@ -27,27 +27,18 @@ h1, h2, h3, h4, h5, h6 {
   width: 800px;
 }
 
-#table {
-  width: 100%;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+#sales-tracker-2 {
+  display: flex;
   text-align: center;
-  padding: 16px;
+  background-color: rgb(151, 176, 141);
+  color: rgb(56, 56, 56);
+  width: fit-content;
 }
 
-#table, th, td {
-  border: 1px solid whitesmoke;
+#sales-tracker-2 ul {
+  list-style-type: none;
+  padding: 0;
+  margin-left: 16px;
+  margin-right: 16px;
 }
 
-#table h2 {
-  color: wheat;
-}
-
-.times {
-  background-color: rgb(92, 82, 4);
-  color: rgb(32, 32, 32);
-}
-
-tr:first-of-type {
-  background-color: rgb(184, 184, 184);
-  color: rgb(28, 28, 28);
-}
