@@ -134,11 +134,17 @@ function chooseStore() {
   }
   let el = $('table-container');
   let popup = document.createElement('div');
+  let exit = document.createElement('button');
   let select = document.createElement('select');
   let option = document.createElement('option');
   let store;
 
   popup.setAttribute('id', 'popup');
+
+
+  exit.setAttribute('id','exit-update');
+  exit.setAttribute('onclick', 'exitUpdate()');
+  exit.innerHTML = 'Cancel';
 
   select.setAttribute('name', 'store');
   select.setAttribute('id', 'store-select');
@@ -154,7 +160,10 @@ function chooseStore() {
     option.innerHTML = store.name;
     select.appendChild(option);
   }
+
+
   popup.appendChild(select);
+  popup.appendChild(exit);
   el.appendChild(popup);
 
   select.addEventListener('change', input);
@@ -166,17 +175,24 @@ function input() {
     return;
   }
 
-  let el = $('popup');
+  let popup = $('popup');
+  popup.removeChild($('exit-update'));
   let submit = document.createElement('button');
+  let exit = document.createElement('button');
 
   submit.setAttribute('id','submit-update');
   submit.setAttribute('onclick', 'update()');
   submit.innerHTML = 'Update Values';
 
-  addInputField(el, 'min');
-  addInputField(el, 'max');
-  addInputField(el, 'avg');
-  el.appendChild(submit);
+  exit.setAttribute('id','exit-update');
+  exit.setAttribute('onclick', 'exitUpdate()');
+  exit.innerHTML = 'Cancel';
+
+  addInputField(popup, 'min');
+  addInputField(popup, 'max');
+  addInputField(popup, 'avg');
+  popup.appendChild(submit);
+  popup.appendChild(exit);
 }
 
 // helper function to add an input element
@@ -228,7 +244,11 @@ function update() {
 
   el.removeChild(popup);
 }
-// console.log(seattle);
+
+
+function exitUpdate() {
+  $('table-container').removeChild($('popup'));
+}
 
 
 
