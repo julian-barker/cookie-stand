@@ -6,21 +6,26 @@ const lookup = new Map();
 const opening = 6;
 const closing = 20;
 const traffic = [0.5, 0.75, 1.0, 0.6, 0.8, 1.0, 0.7, 0.4, 0.6, 0.9, 0.7, 0.5, 0.3, 0.4, 0.6];
+// const traffic = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 const hours = createHours(opening, closing);
-const hrlyTotals = new Array(closing - opening + 1).fill(0);
+const totalHourlySales = new Array(closing - opening + 1).fill(0);
+const totalHourlyStaff = new Array(closing - opening).fill(0);
 
 const storePrototype = {
   project() {
     let i;
     let total = 0;
+    const workers =[];
     const temp = [];
     for (i = 0; i < hours.length - 1; i++) {
       let sales = Math.floor((Math.random() * (this.max - this.min + 1) + this.min) * this.avg * traffic[i]);
+      workers.push(Math.ceil(sales / 20));
       temp.push(sales);
       total += sales;
     }
 
     temp.push(total);
+    this.workers = workers;
     this.dailyTotal = total;
     this.projection = temp;
   }
@@ -38,7 +43,8 @@ const Lima = new Store('Lima', 2, 16, 4.6);
 
 const stores = [Seattle, Tokyo, Dubai, Paris, Lima];
 
-display();
+displaySales();
+displayStaff();
 
 
 // create the array of hours
@@ -87,8 +93,8 @@ function Store(name, min, max, avg) {
 
 
 // displays Stores as a table
-function display() {
-  const tab = $('table');
+function displaySales() {
+  const tab = $('sales-table');
   while (tab.firstChild) {
     tab.removeChild(tab.firstChild);
   }
@@ -100,7 +106,7 @@ function display() {
 
   colLocations.setAttribute('id', 'locations');
   colValues.setAttribute('span', '14');
-  colValues.setAttribute('id', 'cookie-values');
+  colValues.setAttribute('class', 'table-values');
   colTotals.setAttribute('id', 'daily-totals');
   colgroup.appendChild(colLocations);
   colgroup.appendChild(colValues);
@@ -109,9 +115,9 @@ function display() {
   // create headings and totals rows with first column elements
   const headings = _('tr');
   const totals = _('tr');
-  headings.innerHTML += '<th>Location</th>';
+  headings.innerHTML = '<th>Location</th>';
   totals.innerHTML = '<td><b>Totals</b></td>';
-  hrlyTotals.fill(0);
+  totalHourlySales.fill(0);
 
   // populate data rows
   let store;
@@ -123,7 +129,7 @@ function display() {
     for (i in store.projection) {
       // console.log(`store: ${store.name}; i = ${i}`);
       row.innerHTML += `<td>${store.projection[i]}</td>`;
-      hrlyTotals[i] += store.projection[i];
+      totalHourlySales[i] += store.projection[i];
     }
     tab.appendChild(row);
   }
@@ -132,13 +138,63 @@ function display() {
   let j;
   for (j in hours) {
     headings.innerHTML += `<th>${hours[j]}</th>`;
-    totals.innerHTML += `<td>${hrlyTotals[j]}</td>`;
+    totals.innerHTML += `<td>${totalHourlySales[j]}</td>`;
   }
   tab.appendChild(totals);
   tab.prepend(headings);
   tab.prepend(colgroup);
 }
 
+
+// displays table of staff requirements
+function displayStaff() {
+  const tab = $('staff-table');
+  while (tab.firstChild) {
+    tab.removeChild(tab.firstChild);
+  }
+
+  const colgroup = _('colgroup');
+  const colLocations = _('col');
+  const colValues = _('col');
+
+  colLocations.setAttribute('id', 'locations');
+  colValues.setAttribute('span', '14');
+  colValues.setAttribute('class', 'table-values');
+  colgroup.appendChild(colLocations);
+  colgroup.appendChild(colValues);
+
+  // create headings and totals rows with first column elements
+  const headings = _('tr');
+  const totals = _('tr');
+  headings.innerHTML = '<th>Location</th>';
+  totals.innerHTML = '<td><b>Totals</b></td>';
+  totalHourlyStaff.fill(0);
+
+  // populate data rows
+  let store;
+  for (store of stores) {
+    let row = _('tr');
+    row.innerHTML += `<b>${store.name}</b>`; //populate location column
+
+    let i;
+    for (i in store.workers) {
+      // console.log(`store: ${store.name}; i = ${i}`);
+      row.innerHTML += `<td>${store.workers[i]}</td>`;
+      totalHourlyStaff[i] += store.workers[i];
+    }
+    tab.appendChild(row);
+  }
+
+  // populate headings and totals rows
+  let j;
+  for (j = 0; j < hours.length - 1; j++) {
+    headings.innerHTML += `<th>${hours[j]}</th>`;
+    totals.innerHTML += `<td>${totalHourlyStaff[j]}</td>`;
+  }
+  tab.appendChild(totals);
+  tab.prepend(headings);
+  tab.prepend(colgroup);
+}
 
 
 // brings up Store selection menu as popup on button push
@@ -147,7 +203,7 @@ function chooseStore() {
     return;
   }
 
-  let container = $('table-container');
+  let container = $('sales-container');
   let blur = _('div');
   let popup = _('div');
   let exit = _('button');
@@ -192,7 +248,6 @@ function input() {
     return;
   }
 
-  let blur = $('popup-blur');
   let popup = $('popup');
   popup.removeChild($('exit-update'));
   let submit = _('button');
@@ -214,14 +269,14 @@ function input() {
 }
 
 // helper function to add an input element
-function addInputField(el, value) {
+function addInputField(container, value) {
   let div = _('div');
   let label = _('label');
   let input = _('input');
   let store = lookup.get($('store-select').value);
 
   if ($(`${value}-container`)) {
-    el.removeChild($(`${value}-container`));
+    container.removeChild($(`${value}-container`));
   }
 
   div.setAttribute('id', `${value}-container`);
@@ -236,13 +291,12 @@ function addInputField(el, value) {
 
   div.appendChild(label);
   div.appendChild(input);
-  el.appendChild(div);
-
+  container.appendChild(div);
 }
 
 // on submission, alters store params with input values and reruns projection for that Store
 function update() {
-  let container = $('table-container');
+  let container = $('sales-container');
   let popup = $('popup');
   let select = $('store-select');
   let min = $('min');
@@ -256,15 +310,14 @@ function update() {
   store.avg = parseInt(avg.value);
 
   store.project();
-  display();
+  displaySales();
   exitUpdate();
 }
 
 
 function exitUpdate() {
-  $('table-container').removeChild($('popup-blur'));
+  $('sales-container').removeChild($('popup-blur'));
 }
-
 
 
 // class Store {
