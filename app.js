@@ -238,9 +238,9 @@ function displayStores() {
     const stats = _('div');
     stats.setAttribute('id', `stats-${store.name}`);
     stats.innerHTML += `<h3>${store.name}</h3>`;
-    stats.innerHTML += `<p>min: ${store.min}</p>`;
-    stats.innerHTML += `<p>max: ${store.max}</p>`;
-    stats.innerHTML += `<p>avg: ${store.avg}</p>`;
+    stats.innerHTML += `<p>High (cust/hr): ${store.max}</p>`;
+    stats.innerHTML += `<p>Low (cust/hr): ${store.min}</p>`;
+    stats.innerHTML += `<p>Avg Purchase: ${store.avg}</p>`;
     body.appendChild(stats);
   }
   container.insertBefore(body, $('choose-store'));
