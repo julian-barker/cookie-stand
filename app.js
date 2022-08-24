@@ -61,6 +61,9 @@ const stores = [Seattle, Tokyo, Dubai, Paris, Lima];
 
 displaySales();
 displayStaff();
+$('choose-store').addEventListener('click', chooseStore);
+
+
 
 // create the array of hours
 function createHours(open, close) {
@@ -82,26 +85,6 @@ function Store(name, min, max, avg) {
   this.min = min;
   this.max = max;
   this.avg = avg;
-  // store.projection = [];
-  // store.dailyTotal = 0;
-
-  // store.project = function() {
-  //   let i;
-  //   let total = 0;
-  //   const temp = [];
-  //   const temp2 = [];
-  //   for (i = 0; i < hours.length - 1; i++) {
-  //     let sales = Math.floor((Math.random() * (this.max - this.min + 1) + this.min) * this.avg * traffic[i]);
-  //     temp.push(sales);
-  //     total += sales;
-  //   }
-
-  //   temp.push(total);
-  //   this.dailyTotal = total;
-  //   this.projection = temp;
-  //   this.projection2 = temp2;
-  // };
-
   this.project();
   lookup.set(name, this);
 }
@@ -303,11 +286,12 @@ function input() {
   let exit = _('button');
 
   submit.setAttribute('id','submit-update');
-  submit.setAttribute('onclick', 'update()');
+  //submit.setAttribute('onclick', 'update()');
+  submit.addEventListener('click', update);
   submit.innerHTML = 'Update Values';
 
   exit.setAttribute('id','exit-update');
-  exit.setAttribute('onclick', 'exitUpdate()');
+  exit.addEventListener('click', exitUpdate);
   exit.innerHTML = 'Cancel';
 
   addInputField(popup, 'min');
