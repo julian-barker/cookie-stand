@@ -61,6 +61,7 @@ const stores = [Seattle, Tokyo, Dubai, Paris, Lima];
 
 displaySales();
 displayStaff();
+displayStores();
 $('choose-store').addEventListener('click', chooseStore);
 
 
@@ -215,7 +216,7 @@ function displayStaff() {
   let j;
   for (j = 0; j < hours.length - 1; j++) {
     headings.innerHTML += `<th>${hours[j]}</th>`;
-    totals.innerHTML += `<td>${totalHourlyStaff[j]}</td>`;
+    totals.innerHTML += `<td><b>${totalHourlyStaff[j]}</b></td>`;
   }
   tab.appendChild(totals);
   thead.appendChild(headings);
@@ -223,6 +224,27 @@ function displayStaff() {
   tab.prepend(colgroup);
 }
 
+function displayStores() {
+  const container = $('params-container');
+  if ($('stats-body')) {
+    container.removeChild($('stats-body'));
+  }
+  const body = _('div');
+
+  body.setAttribute('id', 'stats-body');
+
+  let store;
+  for (store of stores) {
+    const stats = _('div');
+    stats.setAttribute('id', `stats-${store.name}`);
+    stats.innerHTML += `<h3>${store.name}</h3>`;
+    stats.innerHTML += `<p>min: ${store.min}</p>`;
+    stats.innerHTML += `<p>max: ${store.max}</p>`;
+    stats.innerHTML += `<p>avg: ${store.avg}</p>`;
+    body.appendChild(stats);
+  }
+  container.insertBefore(body, $('choose-store'));
+}
 
 // brings up Store selection menu as popup on button push
 function chooseStore() {
@@ -337,6 +359,8 @@ function update() {
 
   store.project();
   displaySales();
+  displayStaff();
+  displayStores();
   exitUpdate();
 }
 
