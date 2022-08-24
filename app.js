@@ -116,15 +116,6 @@ function displaySales() {
   let store;
   for (store of stores) {
     store.render();
-    // row.innerHTML += `<b>${store.name}</b>`; //populate location column
-
-    // let i;
-    // for (i in store.projection) {
-    //   // console.log(`store: ${store.name}; i = ${i}`);
-    //   row.innerHTML += `<td>${store.projection[i]}</td>`;
-    //   totalHourlySales[i] += store.projection[i];
-    // }
-    // tab.appendChild(row);
   }
   renderTotals();
 }
@@ -153,6 +144,7 @@ function renderColgroup() {
 // insert table headings row
 function renderHeading() {
   const tab = $('sales-table');
+  const thead = _('thead');
   const headings = _('tr');
   headings.innerHTML = '<th>Location</th>';
 
@@ -160,7 +152,8 @@ function renderHeading() {
   for (i in hours) {
     headings.innerHTML += `<th>${hours[i]}</th>`;
   }
-  tab.appendChild(headings);
+  thead.appendChild(headings);
+  tab.appendChild(thead);
 }
 
 
@@ -196,6 +189,7 @@ function displayStaff() {
   colgroup.appendChild(colValues);
 
   // create headings and totals rows with first column elements
+  const thead = _('thead');
   const headings = _('tr');
   const totals = _('tr');
   headings.innerHTML = '<th>Location</th>';
@@ -224,7 +218,8 @@ function displayStaff() {
     totals.innerHTML += `<td>${totalHourlyStaff[j]}</td>`;
   }
   tab.appendChild(totals);
-  tab.prepend(headings);
+  thead.appendChild(headings);
+  tab.prepend(thead);
   tab.prepend(colgroup);
 }
 
