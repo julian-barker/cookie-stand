@@ -52,11 +52,17 @@ Object.setPrototypeOf(Store.prototype, storePrototype);
 // console.log(Store);
 const stores = [];
 
-const Seattle = new Store('Seattle', 23, 65, 6.3);
-const Tokyo = new Store('Tokyo', 3, 24, 1.2);
-const Dubai = new Store('Dubai', 11, 38, 3.7);
-const Paris = new Store('Paris', 20, 38, 2.3);
-const Lima = new Store('Lima', 2, 16, 4.6);
+new Store('Seattle', 23, 65, 6.3);
+new Store('Tokyo', 3, 24, 1.2);
+new Store('Dubai', 11, 38, 3.7);
+new Store('Paris', 20, 38, 2.3);
+new Store('Lima', 2, 16, 4.6);
+
+// const Seattle = new Store('Seattle', 23, 65, 6.3);
+// const Tokyo = new Store('Tokyo', 3, 24, 1.2);
+// const Dubai = new Store('Dubai', 11, 38, 3.7);
+// const Paris = new Store('Paris', 20, 38, 2.3);
+// const Lima = new Store('Lima', 2, 16, 4.6);
 
 // const stores = [Seattle, Tokyo, Dubai, Paris, Lima];
 
