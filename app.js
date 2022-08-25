@@ -12,7 +12,7 @@ const lookup = new Map();
 const opening = 6;
 const closing = 20;
 const traffic = [0.5, 0.75, 1.0, 0.6, 0.8, 1.0, 0.7, 0.4, 0.6, 0.9, 0.7, 0.5, 0.3, 0.4, 0.6];
-// const traffic = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+
 const hours = createHours(opening, closing);
 const totalHourlySales = new Array(closing - opening + 1).fill(0);
 const totalHourlyStaff = new Array(closing - opening).fill(0);
