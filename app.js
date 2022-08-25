@@ -8,7 +8,6 @@ if ( document.querySelector('title').getAttribute('id') === 'home') {
 
 $('ld-switch').addEventListener('click', lightDark);
 
-let dark = false;
 const lookup = new Map();
 const opening = 6;
 const closing = 20;
@@ -220,7 +219,7 @@ function displayStaff() {
 
     let i;
     for (i in store.workers) {
-      console.log(`store: ${store.name}; i = ${i}`, store.workers[i]);
+      // console.log(`store: ${store.name}; i = ${i}`, store.workers[i]);
       row.innerHTML += `<td>${store.workers[i]}</td>`;
       totalHourlyStaff[i] += store.workers[i];
     }
@@ -386,16 +385,8 @@ function exitUpdate() {
 
 
 function lightDark() {
-  const css = $('darkmode');
-  console.log(dark, css);
-
-  if (dark) {
-    css.setAttribute('href', 'lightmode.css');
-    dark = false;
-  } else {
-    css.setAttribute('href', 'darkmode.css');
-    dark = true;
-  }
+  const page = document.querySelector('html');
+  page.classList.toggle('dark');
 }
 
 

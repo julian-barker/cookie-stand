@@ -6,19 +6,34 @@
 html {
   --main-bg-col: hsl(222 52% 95%);
   --main-font-col: hsl(200 5% 15%);
+  --hf-font-col: hsl(200 5% 15%);
   --banner-col: hsl(190 80% 60%);
   --accent-font-col: hsl(30 90% 45%);
+  --table-bg: hsl(15 40% 85%);
+  --table-font-col: hsl(200 5% 15%);
   --table-totals-col: hsl(200 50% 85%);
   --table-grandTotal-col: hsl(200 50% 75%);
+  --table-column1-col: rgb(255, 255, 133);
+  --table-title-bg-col: hsl(0 0% 80%);
+  --ld-col: hsl(60 50% 70%);
+  --ld-accent-col: hsl(240 25% 15%);
+  
 }
 
-html {
-  --main-bg-col: hsl(222 52% 95%);
-  --main-font-col: hsl(200 5% 15%);
+html.dark {
+  --main-bg-col: hsl(222 25% 15%);
+  --main-font-col: hsl(30 40% 80%);
   --banner-col: hsl(190 80% 60%);
   --accent-font-col: hsl(30 90% 45%);
-  --table-totals-col: hsl(200 50% 85%);
-  --table-grandTotal-col: hsl(200 50% 75%);
+  --table-bg: hsl(0 0% 15%);
+  --table-font-col: hsl(240 15% 75%);
+  --table-totals-col: hsl(200 50% 15%);
+  --table-grandTotal-col: hsl(200 50% 20%);
+  --table-column1-col: hsl(60 50% 10%);
+  --table-title-bg-col: hsl(0 0% 25%);
+  --ld-col: hsl(240 25% 15%);
+  --ld-accent-col: hsl(60 50% 70%);
+
 }
 
 
@@ -41,6 +56,7 @@ header, footer {
   padding-bottom: 12px;
   display: flex;
   background-color: var(--banner-col);
+  color: var(--hf-font-col);
 }
 
 header h2, footer h2 {
@@ -99,6 +115,14 @@ h1, h2, h3, h4, h5, h6 {
   right: 5px;
   border: 3px dashed;
   border-radius: 50%;
+  background-color: var(--ld-col);
+  color: var(--ld-accent-col);
+  transition: 250ms;
+}
+
+#ld-switch:hover {
+  background-color: var(--ld-accent-col);
+  color: var(--ld-col);
 }
 
 h1 {
@@ -131,7 +155,7 @@ h1 {
   flex-flow: column;
   justify-content: flex-start;
   align-items: center;
-  background-color: hsl(15 40% 85%);
+  background-color: var(--table-bg);
 }
 
 table {
@@ -139,6 +163,7 @@ table {
   border-collapse: collapse;
   padding: 16px;
   background-color: var(--main-font-col);
+  color: var(--table-font-col) !important;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   text-align: center;
 }
@@ -151,8 +176,7 @@ th, td {
 
 tr :first-child {
   width: 140px;
-  border: 1px solid rgb(81, 81, 81) !important;
-  background-color: rgb(255, 255, 133);
+  background-color: var(--table-column1-col);
   font-weight: 600;
 }
 
@@ -163,18 +187,17 @@ tr :first-child {
 }
 
 thead th {
-  background-color: hsl(0 0% 80%) !important;
-  color: rgb(28, 28, 28);
+  background-color: var(--table-title-bg-col) !important;
 }
 
-tr:last-of-type > :not(:first-child) {
+table > tr:last-of-type > :not(:first-child) {
   background-color: var(--table-totals-col);
-  color: rgb(28, 28, 28);
+  /* color: rgb(28, 28, 28); */
 }
 
 #sales-table tr:last-of-type > :last-child {
   background-color: var(--table-grandTotal-col);
-  color: rgb(28, 28, 28);
+  /* color: rgb(28, 28, 28); */
 }
 
 th {
