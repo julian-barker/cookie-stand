@@ -9,6 +9,9 @@
   <script src="app.js" defer></script>
   <title>Cookie Stand</title>
 </head>
+
+
+
 <body>
   <header>
     <img src="./assets/salmon.png"  alt="salmon" height="50px">
@@ -21,11 +24,24 @@
     <button id="ld-switch">L/D</button>
   </header>
   <hr>
+
+
   <main>
     <h1>SSC Order Form</h1>
     <!-- <img src="./assets/salmon.png" alt="A nice salmon." id="hero"> -->
     <Form id="order-form">
       <ul>
+        <li>
+          <label for="cookie-type">Cookie Flavor: </label>
+          <input type="text" name="cookie-type">
+        </li>
+        <li>
+          <label for="quantity">How many?: </label>
+          <input type="number" name="quantity">
+        </li>
+
+        <hr>
+
         <li>
           <label for="first">First Name: </label>
           <input type="text" name="first">
@@ -43,6 +59,7 @@
           <input type="text" name="city">
         </li>
         <li>
+          <label for="state">State: </label>
           <select name="state" id="state">
             <option value="">-- State --</option>
             <option value="al">AL - ALABAMA</option>
@@ -97,44 +114,31 @@
           </select>
         </li>
         <li>
-          <label for="zip"></label>
-          <input type="text" name="">
+          <label for="zip">Zip Code: </label>
+          <input type="number" name="zip">
         </li>
         <li>
-          <label for=""></label>
-          <input type="text" name="">
+          <label for="phone">Phone Number: </label>
+          <input type="tel" name="phone">
         </li>
         <li>
-          <label for=""></label>
-          <input type="text" name="">
-        </li>
-        <li>
-          <label for=""></label>
-          <input type="text" name="">
-        </li>
-        <li>
-          <label for=""></label>
-          <input type="text" name="">
-        </li>
-        <li>
-          <label for=""></label>
-          <input type="text" name="">
-        </li>
-        <li>
-          <label for=""></label>
-          <input type="text" name="">
+          <label for="email">Email: </label>
+          <input type="email" name="">
         </li>
         
+        <br>
+
+        <li>
+          <label for="comments">Comments: </label>
+          <textarea name="comments" id="order-comments" cols="30" rows="10"></textarea>
+        </li>
       </ul>
+      <br>
       <button type="submit">Submit</button>
     </Form>
-    <section id="about">
-      <h2>About Us</h2>
-      <p>
-        Slammin' Salmon Cookies is your one-stop shop for all of your wants and needs.... As long as your needs are limited to delicious cookies made <em>by</em> salmon, <em>for</em> salmon, and <em>of</em> salmon! Fit for human consuption as well!
-      </p>
-    </section>
   </main>
+
+
   <footer>
     <h2>Locations</h2>
     <section id="addresses">
