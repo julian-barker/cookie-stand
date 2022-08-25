@@ -1,12 +1,27 @@
-
 @font-face { 
 	font-family: 'Raleway'; 
-	src: url('./assets/Raleway.ttf'); 
+	src: url('./assets/Raleway-Bold.ttf'); 
 }
 
 html {
-  padding: 0;
+  --main-bg-col: hsl(222 52% 95%);
+  --main-font-col: hsl(200 5% 15%);
+  --banner-col: hsl(190 80% 60%);
+  --accent-font-col: hsl(30 90% 45%);
+  --table-totals-col: hsl(200 50% 85%);
+  --table-grandTotal-col: hsl(200 50% 75%);
 }
+
+html {
+  --main-bg-col: hsl(222 52% 95%);
+  --main-font-col: hsl(200 5% 15%);
+  --banner-col: hsl(190 80% 60%);
+  --accent-font-col: hsl(30 90% 45%);
+  --table-totals-col: hsl(200 50% 85%);
+  --table-grandTotal-col: hsl(200 50% 75%);
+}
+
+
 
 body {
   width: 100%;
@@ -16,6 +31,8 @@ body {
   flex-flow: column;
   align-items: center;
   text-align: center;
+  background-color: var(--main-bg-col);
+  color: var(--main-font-col);
 }
 
 header, footer {
@@ -23,6 +40,11 @@ header, footer {
   padding-top: 12px;
   padding-bottom: 12px;
   display: flex;
+  background-color: var(--banner-col);
+}
+
+header h2, footer h2 {
+  color: var(--accent-font-col);
 }
 
 header {
@@ -100,6 +122,8 @@ h1 {
 .table-container {
   width: 1000px;
   margin-bottom: 32px;
+  border: 3px solid var(--banner-col);
+  border-radius: 4px;
   padding-left: 32px;
   padding-right: 32px;
   padding-bottom: 32px;
@@ -107,26 +131,50 @@ h1 {
   flex-flow: column;
   justify-content: flex-start;
   align-items: center;
+  background-color: hsl(15 40% 85%);
 }
 
 table {
   width: 100%;
+  border-collapse: collapse;
   padding: 16px;
+  background-color: var(--main-font-col);
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   text-align: center;
 }
 
-#table-locations {
+th, td {
+  border: 1px solid var(--main-font-col);
+  border-collapse: collapse;
+  background-color: var(--main-bg-col);
+}
+
+tr :first-child {
   width: 140px;
+  border: 1px solid rgb(81, 81, 81) !important;
+  background-color: rgb(255, 255, 133);
+  font-weight: 600;
 }
 
-.table-values {
-  width: min-content;
-}
-
-#daily-totals {
+#sales-table tr > td:last-child {
   width: fit-content;
   min-width: 120px;
+  background-color: var(--table-totals-col)
+}
+
+thead th {
+  background-color: hsl(0 0% 80%) !important;
+  color: rgb(28, 28, 28);
+}
+
+tr:last-of-type > :not(:first-child) {
+  background-color: var(--table-totals-col);
+  color: rgb(28, 28, 28);
+}
+
+#sales-table tr:last-of-type > :last-child {
+  background-color: var(--table-grandTotal-col);
+  color: rgb(28, 28, 28);
 }
 
 th {
@@ -137,6 +185,7 @@ th {
 }
 
 td {
+  margin: 0;
   padding-top: 2px;
   padding-bottom: 2px;
 }

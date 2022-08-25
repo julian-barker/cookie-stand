@@ -22,7 +22,7 @@ const storePrototype = {
   project() {
     let i;
     let total = 0;
-    const workers =[];
+    const workers = [];
     const temp = [];
     for (i = 0; i < hours.length - 1; i++) {
       let sales = Math.floor((Math.random() * (this.max - this.min + 1) + this.min) * this.avg * traffic[i]);
@@ -42,7 +42,7 @@ const storePrototype = {
     const table = $('sales-table');
 
     let row = _('tr');
-    row.innerHTML += `<b>${this.name}</b>`; //populate location column
+    row.innerHTML += `<td>${this.name}</td>`; //populate location column
 
     let i;
     for (i in this.projection) {
@@ -209,18 +209,18 @@ function displayStaff() {
   const headings = _('tr');
   const totals = _('tr');
   headings.innerHTML = '<th>Location</th>';
-  totals.innerHTML = '<td><b>Totals</b></td>';
+  totals.innerHTML = '<td>Totals</td>';
   totalHourlyStaff.fill(0);
 
   // populate data rows
   let store;
   for (store of stores) {
     let row = _('tr');
-    row.innerHTML += `<b>${store.name}</b>`; //populate location column
+    row.innerHTML = `<td>${store.name}</td>`; //populate location column
 
     let i;
     for (i in store.workers) {
-      // console.log(`store: ${store.name}; i = ${i}`);
+      console.log(`store: ${store.name}; i = ${i}`, store.workers[i]);
       row.innerHTML += `<td>${store.workers[i]}</td>`;
       totalHourlyStaff[i] += store.workers[i];
     }
@@ -231,7 +231,7 @@ function displayStaff() {
   let j;
   for (j = 0; j < hours.length - 1; j++) {
     headings.innerHTML += `<th>${hours[j]}</th>`;
-    totals.innerHTML += `<td><b>${totalHourlyStaff[j]}</b></td>`;
+    totals.innerHTML += `<td>${totalHourlyStaff[j]}</td>`;
   }
   tab.appendChild(totals);
   thead.appendChild(headings);
