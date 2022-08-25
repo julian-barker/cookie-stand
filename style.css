@@ -19,6 +19,8 @@ body {
 
 header, footer {
   width: 100%;
+  padding-top: 12px;
+  padding-bottom: 12px;
   display: flex;
 }
 
@@ -29,7 +31,7 @@ header {
 }
 
 main {
-  margin-top: 60px;
+  margin-top: 80px;
   display: flex;
   flex-flow: column;
   align-items: center;
@@ -42,8 +44,13 @@ footer {
   align-items: center;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Raleway';
+  font-weight: 900;
+}
+
 .nav {
-  width: 70%;
+  width: 60%;
   margin: 0;
   padding: 0;
   display: flex;
@@ -57,12 +64,16 @@ footer {
   align-items: center;
   list-style-type: none;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Raleway';
-  font-weight: 900;
+#ld-switch {
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  top: 110%;
+  right: 5px;
+  border: 3px dashed;
+  border-radius: 50%;
 }
 
 h1 {
@@ -102,7 +113,7 @@ table {
   text-align: center;
 }
 
-#locations {
+#table-locations {
   width: 140px;
 }
 
@@ -114,8 +125,6 @@ table {
   width: fit-content;
   min-width: 120px;
 }
-
-#daily-totals
 
 th {
   width: 80px;
@@ -172,4 +181,5 @@ footer ul {
   width: 70%;
   display: flex;
   justify-content: space-between;
+  text-align: left;
 }

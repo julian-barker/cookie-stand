@@ -2,6 +2,9 @@
 const $ = (x) => {return document.getElementById(x);};
 const _ = (x) => {return document.createElement(x);};
 
+let dark = false;
+$('ld-switch').addEventListener('click', lightDark);
+
 const lookup = new Map();
 const opening = 6;
 const closing = 20;
@@ -138,7 +141,7 @@ function renderColgroup() {
   const colValues = _('col');
   const colTotals = _('col');
 
-  colLocations.setAttribute('id', 'locations');
+  colLocations.setAttribute('id', 'table-locations');
   colValues.setAttribute('span', '14');
   colValues.setAttribute('class', 'table-values');
   colTotals.setAttribute('id', 'daily-totals');
@@ -232,6 +235,7 @@ function displayStaff() {
   tab.prepend(colgroup);
 }
 
+// displays store params
 function displayStores() {
   const container = $('params-container');
   if ($('stats-body')) {
@@ -376,6 +380,19 @@ function exitUpdate() {
   $('sales-container').removeChild($('popup-blur'));
 }
 
+
+function lightDark() {
+  const css = $('darkmode');
+  console.log(dark, css);
+
+  if (dark) {
+    css.setAttribute('href', 'lightmode.css');
+    dark = false;
+  } else {
+    css.setAttribute('href', 'darkmode.css');
+    dark = true;
+  }
+}
 
 // class Store {
 //   constructor (name, min, max, avgSales) {

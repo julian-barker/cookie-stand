@@ -5,19 +5,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="lightmode.css" id="darkmode">
   <script src="app.js" defer></script>
   <title>Cookie Sales</title>
 </head>
 <body>
   <header>
-    <img src="./assets/salmon.png"  alt="salmon" height="60px">
-    <nav>
-      <ul title="nav" class="nav">
-        <li></li>
-        <li></li>
-        <li><a href="./index.html">Back to Homepage</a></li>
-      </ul>
-    </nav>
+    <img src="./assets/salmon.png"  alt="salmon" height="50px">
+    <ul title="nav" class="nav">
+      <li></li>
+      <li></li>
+      <li><a href="./index.html">Back to Homepage</a></li>
+    </ul>
+    <button id="ld-switch">L/D</button>
   </header>
   <main>
     <h1>SSC Sales Data</h1>
@@ -40,26 +40,75 @@
     </div>
   </main>
   <footer>
-    <section>
-      <h2>Contact</h2>
-      <div>
-        <ul id="contact-key">
-          <li>Cell Phone:</li>
-          <li>Email:</li>
-          <li>Facebook:</li>
-          <li>LinkedIn:</li>
-          <li>GitHub:</li>
+    <h2>Locations</h2>
+    <section id="addresses">
+      <div class="footer-div" id="seattle-address">
+        <h3>Seattle</h3>
+        <ul>
+          <li>1234 Slammin Boulevard</li>
+          <li>Seattle, WA 98034</li>
+          <li>USA</li>
+          <br>
+          <li>WED - MON</li>
+          <li>6 AM - 8 PM PST</li>
         </ul>
-        <ul id="contact-value">
-          <li>+1 (203) 524-0550</li>
-          <li><a href="./">PNWSalmonCookies@gmail.com</a></li>
-          <li><a href="./">/PNW-Salmon-Cookies</a></li>
-          <li><a href="./">/PNW-Salmon-Cookies</a></li>
-          <li><a href="./">/PNW-Salmon-Cookies</a></li>
+      </div>
+      <div class="footer-div" id="tokyo-address">
+        <h3>Tokyo</h3>
+        <ul>
+          <li>1234 Slammin Boulevard</li>
+          <li>Seattle, WA 98034</li>
+          <li>USA</li>
+          <br>
+          <li>WED - MON</li>
+          <li>6 AM - 8 PM PST</li>
+        </ul>
+      </div>
+      <div class="footer-div" id="dubai-address">
+        <h3>Dubai</h3>
+        <ul>
+          <li>1234 Slammin Boulevard</li>
+          <li>Seattle, WA 98034</li>
+          <li>USA</li>
+          <br>
+          <li>WED - MON</li>
+          <li>6 AM - 8 PM PST</li>
+        </ul>
+      </div>
+      <div class="footer-div" id="paris-address">
+        <h3>Paris</h3>
+        <ul>
+          <li>1234 Slammin Boulevard</li>
+          <li>Seattle, WA 98034</li>
+          <li>USA</li>
+          <br>
+          <li>WED - MON</li>
+          <li>6 AM - 8 PM PST</li>
+        </ul>
+      </div>
+      <div class="footer-div" id="lima-address">
+        <h3>Lima</h3>
+        <ul>
+          <li>1234 Slammin Boulevard</li>
+          <li>Seattle, WA 98034</li>
+          <li>USA</li>
+          <br>
+          <li>WED - MON</li>
+          <li>6 AM - 8 PM PST</li>
         </ul>
       </div>
     </section>
-    <p>@julian-barker, 2022</p>
+    <div class="footer-div" id="contacts">
+      <h2>SSC Contact</h2>
+      <ul id="contacts">
+        <li>Cell Phone: +1 (203) 524-0550</li>
+        <li>Email: <a href="./">SlamminSalmonCookies@gmail.com</a></li>
+        <li>Facebook: <a href="./">/Slammin-Salmon-Cookies</a></li>
+        <li>LinkedIn: <a href="./">/Slammin-Salmon-Cookies</a></li>
+        <li>GitHub: <a href="./">/Slammin-Salmon-Cookies</a></li>
+      </ul>
+    </div>
+    </section>  <p>@julian-barker, 2022</p>
   </footer>
 </body>
 </html>
