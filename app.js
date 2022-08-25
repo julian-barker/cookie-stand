@@ -6,6 +6,10 @@ if ( document.querySelector('title').getAttribute('id') === 'home') {
   $('gallery-select').addEventListener('click', gallerySelect);
 }
 
+if ( document.querySelector('title').getAttribute('id') === 'order') {
+  $('order-form').addEventListener('submit', placeOrder);
+}
+
 $('ld-switch').addEventListener('click', lightDark);
 
 const lookup = new Map();
@@ -16,6 +20,8 @@ const traffic = [0.5, 0.75, 1.0, 0.6, 0.8, 1.0, 0.7, 0.4, 0.6, 0.9, 0.7, 0.5, 0.
 const hours = createHours(opening, closing);
 const totalHourlySales = new Array(closing - opening + 1).fill(0);
 const totalHourlyStaff = new Array(closing - opening).fill(0);
+
+const orders = [];
 
 const storePrototype = {
   project() {
@@ -68,8 +74,6 @@ const storePrototype = {
   },
 
   renderStores(body) {
-    const table = $('sales-table');
-
     const stats = _('div');
     stats.setAttribute('id', `stats-${this.name}`);
     stats.innerHTML += `<h3>${this.name}</h3>`;
@@ -100,6 +104,32 @@ $('add-store').addEventListener('click', addStore);
 
 
 
+
+// constructor function for Stores
+function Store(name, min, max, avg) {
+  this.name = name;
+  this.min = min;
+  this.max = max;
+  this.avg = avg;
+  this.project();
+  lookup.set(name, this);
+  stores.push(this);
+}
+
+
+// constructor function for Orders
+function Order(first, last, street, city, state, zip, phone, email, comments, type, qty) {
+  this.name = [first, last];
+  this.address = [street, city, state, zip];
+  this.phone = phone;
+  this.email = email;
+  this.comments = comments;
+  this.order = [type, qty];
+  orders.push(this);
+}
+
+
+
 // create the array of hours
 function createHours(open, close) {
   let i;
@@ -111,18 +141,6 @@ function createHours(open, close) {
   }
   temp.push('Daily Total');
   return temp;
-}
-
-
-// constructor function for Stores
-function Store(name, min, max, avg) {
-  this.name = name;
-  this.min = min;
-  this.max = max;
-  this.avg = avg;
-  this.project();
-  lookup.set(name, this);
-  stores.push(this);
 }
 
 
@@ -364,9 +382,9 @@ function addUpdateField(container, value) {
 }
 
 function addInputField(container, value) {
-  let li = _('li');
-  let label = _('label');
-  let input = _('input');
+  const li = _('li');
+  const label = _('label');
+  const input = _('input');
 
 
   li.setAttribute('id', `${value}-container`);
@@ -385,12 +403,12 @@ function addInputField(container, value) {
 
 // on submission, alters store params with input values and reruns projection for that Store
 function update() {
-  let select = $('store-select');
-  let min = $('min-input');
-  let max = $('max-input');
-  let avg = $('avg-input');
+  const select = $('store-select');
+  const min = $('min-input');
+  const max = $('max-input');
+  const avg = $('avg-input');
 
-  let store = lookup.get(select.value);
+  const store = lookup.get(select.value);
 
   store.min = parseInt(min.value);
   store.max = parseInt(max.value);
@@ -422,33 +440,22 @@ function gallerySelect(e) {
   pic.setAttribute('alt', alt);
 }
 
-// class Store {
-//   constructor (name, min, max, avgSales) {
-//     this.name = name;
-//     this.min = min;
-//     this.max = max;
-//     this.avg = avgSales;
-//     this.sim = [];
-//     this.simulate();
-//   }
 
-//   getSim() {
-//     return this.sim;
-//   }
+function placeOrder(event) {
+  event.preventDefault();
 
-//   simulate() {
-//     let i;
-//     let total = 0;
-//     const temp = [];
-//     for (i = 6; i < 20; i++) {
-//       let t = (i + 11) % 12 + 1;
-//       let m = Math.floor(i/12) ? 'pm' : 'am';
-//       let sales = Math.floor((Math.random() * (this.max - this.min + 1) + this.min) * this.avg);
-//       temp.push(`${t}${m}: ${sales} cookies`);
-//       total += sales;
-//     }
-//     temp.push(`Total: ${total} cookies`);
-//     this.sim = temp;
-//     this.getSim();
-//   }
-// }
+  const form = $('order-form');
+  const response = form.querySelectorAll('input');
+  const type = response[0].value;
+  const qty = response[1].value;
+  const first = response[2].value;
+  const last = response[3].value;
+  const street = response[4].value;
+  const city = response[5].value;
+  const zip = response[6].value;
+  const phone = response[7].value;
+  const email = response[8].value;
+  const state = form.querySelector('select').value;
+  const comments = form.querySelector('textarea').value;
+  new Order(first, last, street, city, state, zip, phone, email, comments, type, qty);
+}

@@ -111,7 +111,6 @@ footer {
 
 table {
   width: 100%;
-  border-collapse: collapse;
   padding: 16px;
   background-color: var(--main-font-col);
   color: var(--table-font-col) !important;
@@ -147,6 +146,13 @@ a:hover {
 
 img {
   filter: brightness(var(--img-brt));
+}
+
+fieldset {
+  margin-top: 24px;
+  margin-bottom: 24px;
+  text-align: left;
+  padding: 16px;
 }
 
 /* -------------------------------------------- */
@@ -311,7 +317,7 @@ table > tr:last-of-type > :not(:first-child) {
 }
 
 #order-form {
-  width: 400px;
+  width: 500px;
 }
 
 #order-form li {

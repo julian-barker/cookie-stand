@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="reset.css">
   <link rel="stylesheet" href="style.css">
   <script src="app.js" defer></script>
-  <title>Cookie Stand</title>
+  <title id="order">Cookie Stand</title>
 </head>
 
 
@@ -29,112 +29,119 @@
   <main>
     <h1>SSC Order Form</h1>
     <!-- <img src="./assets/salmon.png" alt="A nice salmon." id="hero"> -->
-    <form action="./" id="order-form">
-      <ul>
-        <li>
-          <label for="cookie-type">Cookie Flavor: </label>
-          <input type="text" name="cookie-type">
-        </li>
-        <li>
-          <label for="quantity">How many?: </label>
-          <input type="number" name="quantity">
-        </li>
-
-        <hr>
-
-        <li>
-          <label for="first">First Name: </label>
-          <input type="text" name="first">
-        </li>
-        <li>
-          <label for="last">Last Name: </label>
-          <input type="text" name="last">
-        </li>
-        <li>
-          <label for="street">Street Address: </label>
-          <input type="text" name="street">
-        </li>
-        <li>
-          <label for="city">City: </label>
-          <input type="text" name="city">
-        </li>
-        <li>
-          <label for="state">State: </label>
-          <select name="state" id="state">
-            <option value="">-- State --</option>
-            <option value="al">AL - ALABAMA</option>
-            <option value="ak">AK - ALASKA</option>
-            <option value="az">AZ - ARIZONA</option>
-            <option value="ar">AR - ARKANSAS</option>
-            <option value="ca">CA - CALIFORNIA</option>
-            <option value="co">CO - COLORADO</option>
-            <option value="ct">CT - CONNECTICUT</option>
-            <option value="de">DE - DELAWARE</option>
-            <option value="dc">DC - DISTRICT OF COLUMBIA</option>
-            <option value="fl">FL - FLORIDA</option>
-            <option value="ga">GA - GEORGIA</option>
-            <option value="hi">HI - HAWAII</option>
-            <option value="id">ID - IDAHO</option>
-            <option value="il">IL -  ILLINOIS</option>
-            <option value="in">IN - INDIANA</option>
-            <option value="ia">IA - IOWA</option>
-            <option value="ks">KS - KANSAS</option>
-            <option value="ky">KY - KENTUCKY</option>
-            <option value="la">LA- LOUISIANA</option>
-            <option value="md">MD - MARYLAND</option>
-            <option value="ma">MA - MASSACHUSSETTS</option>
-            <option value="mi">MI - MICHIGAN</option>
-            <option value="mn">MN - MINNESOTA</option>
-            <option value="ms">MS - MISSISSIPPI</option>
-            <option value="mo">MO - MISSOURI</option>
-            <option value="mt">MT - MONTANA</option>
-            <option value="ne">NE - NEBRASKA</option>
-            <option value="nv">NV - NEVADA</option>
-            <option value="nh">NH - NEW HAMPSHIRE</option>
-            <option value="nj">NJ - NEW JERSEY</option>
-            <option value="nm">NM - NEW MEXICO</option>
-            <option value="ny">NY - NEW YORK</option>
-            <option value="nc">NC - NORTH CAROLINA</option>
-            <option value="nd">ND - NORTH DAKOTA</option>
-            <option value="oh">OH - OHIO</option>
-            <option value="ok">OK - OKLAHOMA</option>
-            <option value="or">OR - OREGON</option>
-            <option value="pa">PA - PENNSYLVANIA</option>
-            <option value="ri">RI - RHODE ISLAND</option>
-            <option value="sc">SC - SOUTH CAROLINA</option>
-            <option value="sd">SD - SOUTH DAKOTA</option>
-            <option value="tn">TN - TENNESSEE</option>
-            <option value="tx">TX - TEXAS</option>
-            <option value="ut">UT - UTAH</option>
-            <option value="va">VA - VIRGINIA</option>
-            <option value="wa">WA - WASHINGTON</option>
-            <option value="wv">WV - WEST VIRGINA</option>
-            <option value="wi">WI - WISCONSIN</option>
-            <option value="wy">WY - WYOMING</option>
-          </select>
-        </li>
-        <li>
-          <label for="zip">Zip Code: </label>
-          <input type="number" name="zip">
-        </li>
-        <li>
-          <label for="phone">Phone Number: </label>
-          <input type="tel" name="phone">
-        </li>
-        <li>
-          <label for="email">Email: </label>
-          <input type="email" name="">
-        </li>
-        
-        <br>
-
-        <li>
-          <label for="comments">Comments: </label>
-          <textarea name="comments" id="order-comments" cols="30" rows="10"></textarea>
-        </li>
-      </ul>
+    <form id="order-form">
+      <fieldset>
+        <legend>=== Order Info ===</legend>
+        <ul>
+          <li>
+            <label for="cookie-type">Cookie Flavor: </label>
+            <input type="text" name="cookie-type">
+          </li>
+          <li>
+            <label for="quantity">How many?: </label>
+            <input type="number" name="quantity">
+          </li>
+        </ul>
+      </fieldset>
+      <fieldset>
+        <legend>=== Customer Info ===</legend>
+        <ul>
+          <li>
+            <label for="first">First Name: </label>
+            <input type="text" name="first">
+          </li>
+          <li>
+            <label for="last">Last Name: </label>
+            <input type="text" name="last">
+          </li>
+          <li>
+            <label for="street">Street Address: </label>
+            <input type="text" name="street">
+          </li>
+          <li>
+            <label for="city">City: </label>
+            <input type="text" name="city">
+          </li>
+          <li>
+            <label for="state">State: </label>
+            <select name="state" id="state">
+              <option value="">-- State --</option>
+              <option value="al">AL - ALABAMA</option>
+              <option value="ak">AK - ALASKA</option>
+              <option value="az">AZ - ARIZONA</option>
+              <option value="ar">AR - ARKANSAS</option>
+              <option value="ca">CA - CALIFORNIA</option>
+              <option value="co">CO - COLORADO</option>
+              <option value="ct">CT - CONNECTICUT</option>
+              <option value="de">DE - DELAWARE</option>
+              <option value="dc">DC - DISTRICT OF COLUMBIA</option>
+              <option value="fl">FL - FLORIDA</option>
+              <option value="ga">GA - GEORGIA</option>
+              <option value="hi">HI - HAWAII</option>
+              <option value="id">ID - IDAHO</option>
+              <option value="il">IL -  ILLINOIS</option>
+              <option value="in">IN - INDIANA</option>
+              <option value="ia">IA - IOWA</option>
+              <option value="ks">KS - KANSAS</option>
+              <option value="ky">KY - KENTUCKY</option>
+              <option value="la">LA- LOUISIANA</option>
+              <option value="md">MD - MARYLAND</option>
+              <option value="ma">MA - MASSACHUSSETTS</option>
+              <option value="mi">MI - MICHIGAN</option>
+              <option value="mn">MN - MINNESOTA</option>
+              <option value="ms">MS - MISSISSIPPI</option>
+              <option value="mo">MO - MISSOURI</option>
+              <option value="mt">MT - MONTANA</option>
+              <option value="ne">NE - NEBRASKA</option>
+              <option value="nv">NV - NEVADA</option>
+              <option value="nh">NH - NEW HAMPSHIRE</option>
+              <option value="nj">NJ - NEW JERSEY</option>
+              <option value="nm">NM - NEW MEXICO</option>
+              <option value="ny">NY - NEW YORK</option>
+              <option value="nc">NC - NORTH CAROLINA</option>
+              <option value="nd">ND - NORTH DAKOTA</option>
+              <option value="oh">OH - OHIO</option>
+              <option value="ok">OK - OKLAHOMA</option>
+              <option value="or">OR - OREGON</option>
+              <option value="pa">PA - PENNSYLVANIA</option>
+              <option value="ri">RI - RHODE ISLAND</option>
+              <option value="sc">SC - SOUTH CAROLINA</option>
+              <option value="sd">SD - SOUTH DAKOTA</option>
+              <option value="tn">TN - TENNESSEE</option>
+              <option value="tx">TX - TEXAS</option>
+              <option value="ut">UT - UTAH</option>
+              <option value="va">VA - VIRGINIA</option>
+              <option value="wa">WA - WASHINGTON</option>
+              <option value="wv">WV - WEST VIRGINA</option>
+              <option value="wi">WI - WISCONSIN</option>
+              <option value="wy">WY - WYOMING</option>
+            </select>
+          </li>
+          <li>
+            <label for="zip">Zip Code: </label>
+            <input type="number" name="zip">
+          </li>
+          <li>
+            <label for="phone">Phone Number: </label>
+            <input type="tel" name="phone">
+          </li>
+          <li>
+            <label for="email">Email: </label>
+            <input type="email" name="">
+          </li>
+        </ul>
+      </fieldset>
+      <fieldset>
+        <legend>=== Comments ===</legend>
+        <ul>
+          <li>
+            <label for="comments">Comments: </label>
+            <textarea name="comments" id="order-comments" cols="30" rows="10"></textarea>
+          </li>
+        </ul>
+      </fieldset>
       <br>
-      <button type="submit">Submit</button>
+      <button type="submit" id="order-submit">Submit</button>
     </form>
   </main>
 
