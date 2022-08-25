@@ -2,9 +2,10 @@
 const $ = (x) => {return document.getElementById(x);};
 const _ = (x) => {return document.createElement(x);};
 
-let dark = false;
+$('gallery-select').addEventListener('click', gallerySelect);
 $('ld-switch').addEventListener('click', lightDark);
 
+let dark = false;
 const lookup = new Map();
 const opening = 6;
 const closing = 20;
@@ -392,6 +393,15 @@ function lightDark() {
     css.setAttribute('href', 'darkmode.css');
     dark = true;
   }
+}
+
+
+function gallerySelect(e) {
+  const pic = $('gallery-display');
+  const src = e.target.getAttribute('src');
+  const alt = e.target.getAttribute('alt');
+  pic.setAttribute('src', src);
+  pic.setAttribute('alt', alt);
 }
 
 // class Store {
