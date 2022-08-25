@@ -2,7 +2,10 @@
 const $ = (x) => {return document.getElementById(x);};
 const _ = (x) => {return document.createElement(x);};
 
-$('gallery-select').addEventListener('click', gallerySelect);
+if ( document.querySelector('title').getAttribute('id') === 'home') {
+  $('gallery-select').addEventListener('click', gallerySelect);
+}
+
 $('ld-switch').addEventListener('click', lightDark);
 
 let dark = false;
