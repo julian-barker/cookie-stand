@@ -13,7 +13,7 @@ html {
   --table-font-col: hsl(200 5% 15%);
   --table-totals-col: hsl(200 50% 85%);
   --table-grandTotal-col: hsl(200 50% 75%);
-  --table-column1-col: rgb(255, 255, 133);
+  --table-column1-col: hsl(60 100% 76%);
   --table-title-bg-col: hsl(0 0% 80%);
   --ld-col: hsl(60 50% 70%);
   --ld-accent-col: hsl(240 25% 15%);
@@ -34,6 +34,33 @@ html.dark {
   --ld-col: hsl(240 25% 15%);
   --ld-accent-col: hsl(60 50% 70%);
 
+}
+
+
+
+ul {
+  list-style-type: none;
+}
+
+h1, h2 {
+  font-family: 'Raleway';
+  margin-top: 24px;
+  margin-bottom: 24px;
+  color: var(--accent-font-col);
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-family: 'Raleway';
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 
@@ -84,11 +111,6 @@ footer {
   align-items: center;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Raleway';
-  font-weight: 900;
-}
-
 .nav {
   margin: 0;
   padding: 0;
@@ -103,7 +125,6 @@ h1, h2, h3, h4, h5, h6 {
   margin-right: 16px;
   align-self: center;
   text-align: center;
-  list-style-type: none;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
@@ -245,16 +266,17 @@ td {
   left: 0;
   backdrop-filter: blur(10px);
 }
-
+/* 
 #gallery {
   width: 60%;
-}
+} */
 
 #gallery-display {
   height: 300px;
 }
 
 #gallery-select {
+  width: 60%;
   height: 200px;
   margin-top: 32px;
   margin-left: auto;
