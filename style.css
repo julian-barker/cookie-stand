@@ -136,15 +136,6 @@ td {
   padding-bottom: 2px;
 }
 
-form {
-  width: 400px;
-}
-
-form li {
-  display: flex;
-  justify-content: space-between;
-}
-
 
 /* -------------------------------------------- */
 /* class and id selectors */
@@ -251,12 +242,14 @@ table > tr:last-of-type > :not(:first-child) {
 #popup {
   height: 100px;
   width: 300px;
+  border: 4px solid var(--banner-col);
   border-radius: 24px;
   padding: 48px;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  background-color: var(--table-bg);
 }
 
 #popup-blur {
@@ -291,6 +284,15 @@ table > tr:last-of-type > :not(:first-child) {
 #gallery-select img:last-of-type {
   height: 100px;
   border: 4px gray solid;
+}
+
+#order-form {
+  width: 400px;
+}
+
+#order-form li {
+  display: flex;
+  justify-content: space-between;
 }
 
 #addresses {

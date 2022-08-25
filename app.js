@@ -37,7 +37,7 @@ const storePrototype = {
     this.projection = temp;
   },
 
-  render() {
+  renderSales() {
     const table = $('sales-table');
 
     let row = _('tr');
@@ -50,7 +50,35 @@ const storePrototype = {
       totalHourlySales[i] += this.projection[i];
     }
     table.appendChild(row);
+  },
+
+  renderStaff() {
+    const table = $('staff-table');
+
+    let row = _('tr');
+    row.innerHTML += `<td>${this.name}</td>`; //populate location column
+
+    let i;
+    for (i in this.workers) {
+      // console.log(`store: ${store.name}; i = ${i}`);
+      row.innerHTML += `<td>${this.workers[i]}</td>`;
+      totalHourlyStaff[i] += this.workers[i];
+    }
+    table.appendChild(row);
+  },
+
+  renderStores(body) {
+    const table = $('sales-table');
+
+    const stats = _('div');
+    stats.setAttribute('id', `stats-${this.name}`);
+    stats.innerHTML += `<h3>${this.name}</h3>`;
+    stats.innerHTML += `<p>High (cust/hr): ${this.max}</p>`;
+    stats.innerHTML += `<p>Low (cust/hr): ${this.min}</p>`;
+    stats.innerHTML += `<p>Avg Purchase: ${this.avg}</p>`;
+    body.appendChild(stats);
   }
+
 };
 
 Object.setPrototypeOf(Store.prototype, storePrototype);
@@ -64,18 +92,11 @@ new Store('Dubai', 11, 38, 3.7);
 new Store('Paris', 20, 38, 2.3);
 new Store('Lima', 2, 16, 4.6);
 
-// const Seattle = new Store('Seattle', 23, 65, 6.3);
-// const Tokyo = new Store('Tokyo', 3, 24, 1.2);
-// const Dubai = new Store('Dubai', 11, 38, 3.7);
-// const Paris = new Store('Paris', 20, 38, 2.3);
-// const Lima = new Store('Lima', 2, 16, 4.6);
-
-// const stores = [Seattle, Tokyo, Dubai, Paris, Lima];
-
 displaySales();
 displayStaff();
 displayStores();
 $('choose-store').addEventListener('click', chooseStore);
+$('add-store').addEventListener('click', addStore);
 
 
 
@@ -107,158 +128,138 @@ function Store(name, min, max, avg) {
 
 // displays Stores as a table
 function displaySales() {
-  const tab = $('sales-table');
-  while (tab.firstChild) {
-    tab.removeChild(tab.firstChild);
-  }
+  const table = $('sales-table');
+  if (table.innerHTML) table.innerHTML = '';
   totalHourlySales.fill(0);
 
-  const colgroup = _('colgroup');
-  const colLocations = _('col');
-  const colValues = _('col');
-  const colTotals = _('col');
-
-  colLocations.setAttribute('id', 'locations');
-  colValues.setAttribute('span', '14');
-  colValues.setAttribute('class', 'table-values');
-  colTotals.setAttribute('id', 'daily-totals');
-  colgroup.appendChild(colLocations);
-  colgroup.appendChild(colValues);
-  colgroup.appendChild(colTotals);
-
-  renderColgroup();
-  renderHeading();
+  renderHeading(table, hours.length);
   let store;
   for (store of stores) {
-    store.render();
+    store.renderSales();
   }
-  renderTotals();
+  renderTotals(table, hours.length);
 }
 
 
-// insert colgroup element
-function renderColgroup() {
-  const tab = $('sales-table');
-  const colgroup = _('colgroup');
-  const colLocations = _('col');
-  const colValues = _('col');
-  const colTotals = _('col');
+function displayStaff() {
+  const table = $('staff-table');
+  if (table.innerHTML) table.innerHTML = '';
+  totalHourlyStaff.fill(0);
 
-  colLocations.setAttribute('id', 'table-locations');
-  colValues.setAttribute('span', '14');
-  colValues.setAttribute('class', 'table-values');
-  colTotals.setAttribute('id', 'daily-totals');
-  colgroup.appendChild(colLocations);
-  colgroup.appendChild(colValues);
-  colgroup.appendChild(colTotals);
-
-  tab.appendChild(colgroup);
+  renderHeading(table, totalHourlyStaff.length);
+  let store;
+  for (store of stores) {
+    store.renderStaff();
+  }
+  renderTotals(table, totalHourlyStaff.length);
 }
 
 
 // insert table headings row
-function renderHeading() {
-  const tab = $('sales-table');
+function renderHeading(table, len) {
+  // const tab = $('sales-table');
   const thead = _('thead');
   const headings = _('tr');
   headings.innerHTML = '<th>Location</th>';
 
   let i;
-  for (i in hours) {
+  // for (i in hours) {
+  for (i = 0; i < len; i++) {
     headings.innerHTML += `<th>${hours[i]}</th>`;
   }
   thead.appendChild(headings);
-  tab.appendChild(thead);
+  table.appendChild(thead);
 }
 
 
 // insert table totals row
-function renderTotals() {
-  const tab = $('sales-table');
+function renderTotals(table, len) {
+  // const tab = $('sales-table');
   const totals = _('tr');
   totals.innerHTML = '<th>Total</th>';
 
   let i;
-  for (i in hours) {
+  // for (i in hours) {
+  for (i = 0; i < len; i++) {
     totals.innerHTML += `<th>${totalHourlySales[i]}</th>`;
   }
-  tab.appendChild(totals);
+  table.appendChild(totals);
 }
 
-
-// displays table of staff requirements
-function displayStaff() {
-  const tab = $('staff-table');
-  while (tab.firstChild) {
-    tab.removeChild(tab.firstChild);
-  }
-
-  const colgroup = _('colgroup');
-  const colLocations = _('col');
-  const colValues = _('col');
-
-  colLocations.setAttribute('id', 'locations');
-  colValues.setAttribute('span', '14');
-  colValues.setAttribute('class', 'table-values');
-  colgroup.appendChild(colLocations);
-  colgroup.appendChild(colValues);
-
-  // create headings and totals rows with first column elements
-  const thead = _('thead');
-  const headings = _('tr');
-  const totals = _('tr');
-  headings.innerHTML = '<th>Location</th>';
-  totals.innerHTML = '<td>Totals</td>';
-  totalHourlyStaff.fill(0);
-
-  // populate data rows
-  let store;
-  for (store of stores) {
-    let row = _('tr');
-    row.innerHTML = `<td>${store.name}</td>`; //populate location column
-
-    let i;
-    for (i in store.workers) {
-      // console.log(`store: ${store.name}; i = ${i}`, store.workers[i]);
-      row.innerHTML += `<td>${store.workers[i]}</td>`;
-      totalHourlyStaff[i] += store.workers[i];
-    }
-    tab.appendChild(row);
-  }
-
-  // populate headings and totals rows
-  let j;
-  for (j = 0; j < hours.length - 1; j++) {
-    headings.innerHTML += `<th>${hours[j]}</th>`;
-    totals.innerHTML += `<td>${totalHourlyStaff[j]}</td>`;
-  }
-  tab.appendChild(totals);
-  thead.appendChild(headings);
-  tab.prepend(thead);
-  tab.prepend(colgroup);
-}
 
 // displays store params
 function displayStores() {
-  const container = $('params-container');
-  if ($('stats-body')) {
-    container.removeChild($('stats-body'));
+  const body = $('stats-body');
+  if (body.innerHTML) {
+    body.innerHTML = '';
   }
-  const body = _('div');
-
-  body.setAttribute('id', 'stats-body');
 
   let store;
   for (store of stores) {
-    const stats = _('div');
-    stats.setAttribute('id', `stats-${store.name}`);
-    stats.innerHTML += `<h3>${store.name}</h3>`;
-    stats.innerHTML += `<p>High (cust/hr): ${store.max}</p>`;
-    stats.innerHTML += `<p>Low (cust/hr): ${store.min}</p>`;
-    stats.innerHTML += `<p>Avg Purchase: ${store.avg}</p>`;
-    body.appendChild(stats);
+    store.renderStores(body);
   }
-  container.insertBefore(body, $('choose-store'));
+}
+
+
+function addStore() {
+  if ($('popup')) {
+    return;
+  }
+
+  let container = document.querySelector('main');
+  let blur = _('div');
+  let popup = _('div');
+  let form = _('form');
+  const fieldset = _('fieldset');
+  let ul = _('ul');
+  let submit = _('button');
+  let exit = _('button');
+
+  blur.setAttribute('id', 'popup-blur');
+  popup.setAttribute('id', 'popup');
+
+  form.setAttribute('id', 'new-store-form');
+
+  submit.setAttribute('id','submit-update');
+  submit.addEventListener('click', submitStore);
+  submit.innerHTML = 'Add Store';
+
+  exit.setAttribute('id','exit-add');
+  exit.addEventListener('click', exitPopup);
+  exit.innerHTML = 'Cancel';
+
+  addInputField(ul, 'name');
+  addInputField(ul, 'min');
+  addInputField(ul, 'max');
+  addInputField(ul, 'avg');
+
+  fieldset.appendChild(ul);
+  form.appendChild(fieldset);
+  popup.appendChild(form);
+  popup.appendChild(submit);
+  popup.appendChild(exit);
+  blur.appendChild(popup);
+  container.prepend(blur);
+}
+
+function submitStore() {
+  const name = document.querySelector('#name-input').value;
+  if (lookup.get(name)) {
+    alert('That store already exists!');
+    return;
+  }
+
+  const min = parseInt(document.querySelector('#min-input').value);
+  const max = parseInt(document.querySelector('#max-input').value);
+  const avg = parseInt(document.querySelector('#avg-input').value);
+
+  const store = new Store(name, min, max, avg);
+
+  store.project();
+  displaySales();
+  displayStaff();
+  displayStores();
+  exitPopup();
 }
 
 // brings up Store selection menu as popup on button push
@@ -267,7 +268,7 @@ function chooseStore() {
     return;
   }
 
-  let container = $('sales-container');
+  let container = document.querySelector('main');
   let blur = _('div');
   let popup = _('div');
   let exit = _('button');
@@ -280,7 +281,7 @@ function chooseStore() {
   popup.setAttribute('id', 'popup');
 
   exit.setAttribute('id','exit-update');
-  exit.setAttribute('onclick', 'exitUpdate()');
+  exit.addEventListener('click', exitPopup);
   exit.innerHTML = 'Cancel';
 
   select.setAttribute('name', 'store');
@@ -301,7 +302,7 @@ function chooseStore() {
   popup.appendChild(select);
   popup.appendChild(exit);
   blur.appendChild(popup);
-  container.appendChild(blur);
+  container.prepend(blur);
 
   select.addEventListener('change', input);
 }
@@ -312,30 +313,33 @@ function input() {
     return;
   }
 
-  let popup = $('popup');
+  const popup = $('popup');
   popup.removeChild($('exit-update'));
-  let submit = _('button');
-  let exit = _('button');
+
+  const ul = _('ul');
+  const submit = _('button');
+  const exit = _('button');
 
   submit.setAttribute('id','submit-update');
-  //submit.setAttribute('onclick', 'update()');
   submit.addEventListener('click', update);
   submit.innerHTML = 'Update Values';
 
   exit.setAttribute('id','exit-update');
-  exit.addEventListener('click', exitUpdate);
+  exit.addEventListener('click', exitPopup);
   exit.innerHTML = 'Cancel';
 
-  addInputField(popup, 'min');
-  addInputField(popup, 'max');
-  addInputField(popup, 'avg');
+  addUpdateField(ul, 'min');
+  addUpdateField(ul, 'max');
+  addUpdateField(ul, 'avg');
+
+  popup.appendChild(ul);
   popup.appendChild(submit);
   popup.appendChild(exit);
 }
 
 // helper function to add an input element
-function addInputField(container, value) {
-  let div = _('div');
+function addUpdateField(container, value) {
+  let li = _('li');
   let label = _('label');
   let input = _('input');
   let store = lookup.get($('store-select').value);
@@ -344,27 +348,47 @@ function addInputField(container, value) {
     container.removeChild($(`${value}-container`));
   }
 
-  div.setAttribute('id', `${value}-container`);
+  li.setAttribute('id', `${value}-container`);
 
   label.setAttribute('for', value);
-  label.innerHTML = `${value}:`;
+  label.innerHTML = `${value}: `;
 
   input.setAttribute('type', 'number');
-  input.setAttribute('id', value);
+  input.setAttribute('id', `${value}-input`);
   input.setAttribute('name', value);
   input.setAttribute('value', store[value]);
 
-  div.appendChild(label);
-  div.appendChild(input);
-  container.appendChild(div);
+  li.appendChild(label);
+  li.appendChild(input);
+  container.appendChild(li);
+}
+
+function addInputField(container, value) {
+  let li = _('li');
+  let label = _('label');
+  let input = _('input');
+
+
+  li.setAttribute('id', `${value}-container`);
+
+  label.setAttribute('for', value);
+  label.innerHTML = `${value}: `;
+
+  input.setAttribute('type', 'text');
+  input.setAttribute('id', `${value}-input`);
+  input.setAttribute('name', value);
+
+  li.appendChild(label);
+  li.appendChild(input);
+  container.appendChild(li);
 }
 
 // on submission, alters store params with input values and reruns projection for that Store
 function update() {
   let select = $('store-select');
-  let min = $('min');
-  let max = $('max');
-  let avg = $('avg');
+  let min = $('min-input');
+  let max = $('max-input');
+  let avg = $('avg-input');
 
   let store = lookup.get(select.value);
 
@@ -376,11 +400,11 @@ function update() {
   displaySales();
   displayStaff();
   displayStores();
-  exitUpdate();
+  exitPopup();
 }
 
-function exitUpdate() {
-  $('sales-container').removeChild($('popup-blur'));
+function exitPopup() {
+  document.querySelector('main').removeChild($('popup-blur'));
 }
 
 
