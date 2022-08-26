@@ -2,6 +2,15 @@
 const $ = (x) => {return document.getElementById(x);};
 const _ = (x) => {return document.createElement(x);};
 
+Storage.prototype.setObject = function(key, value) {
+  this.setItem(key, JSON.stringify(value));
+};
+
+Storage.prototype.getObject = function(key) {
+  const value = this.getItem(key);
+  return value && JSON.parse(value);
+};
+
 if ( document.querySelector('title').getAttribute('id') === 'home') {
   $('gallery-select').addEventListener('click', gallerySelect);
 }
@@ -23,6 +32,7 @@ const totalHourlyStaff = new Array(closing - opening).fill(0);
 
 const orders = [];
 
+
 const storePrototype = {
   project() {
     let i;
@@ -30,7 +40,7 @@ const storePrototype = {
     const workers = [];
     const temp = [];
     for (i = 0; i < hours.length - 1; i++) {
-      let sales = Math.floor((Math.random() * (this.max - this.min + 1) + this.min) * this.avg * traffic[i]);
+      const sales = Math.floor((Math.random() * (this.max - this.min + 1) + this.min) * this.avg * traffic[i]);
       const worker = Math.ceil(sales / 20);
       workers.push(worker > 1 ? worker : 2); //min of 2 workers per shift
       temp.push(sales);
@@ -46,7 +56,7 @@ const storePrototype = {
   renderSales() {
     const table = $('sales-table');
 
-    let row = _('tr');
+    const row = _('tr');
     row.innerHTML += `<td>${this.name}</td>`; //populate location column
 
     let i;
@@ -61,7 +71,7 @@ const storePrototype = {
   renderStaff() {
     const table = $('staff-table');
 
-    let row = _('tr');
+    const row = _('tr');
     row.innerHTML += `<td>${this.name}</td>`; //populate location column
 
     let i;
@@ -95,6 +105,17 @@ new Store('Tokyo', 3, 24, 1.2);
 new Store('Dubai', 11, 38, 3.7);
 new Store('Paris', 20, 38, 2.3);
 new Store('Lima', 2, 16, 4.6);
+
+
+if (!localStorage.getObject('stores')) {
+  initialStorage();
+} else {
+  const stores = localStorage.getObject('stores');
+  const lookup = localStorage.getObject('lookup');
+  const totalHourlySales = localStorage.getItem('totalHourlySales');
+  const totalHourlyStaff = localStorage.getItem('totalHourlyStaff');
+}
+console.log(localStorage.getItem('stores')[0].name);
 
 displaySales();
 displayStaff();
@@ -135,8 +156,8 @@ function createHours(open, close) {
   let i;
   const temp = [];
   for (i = open; i < close; i++) {
-    let t = (i + 11) % 12 + 1;
-    let m = Math.floor(i/12) ? 'pm' : 'am';
+    const t = (i + 11) % 12 + 1;
+    const m = Math.floor(i/12) ? 'pm' : 'am';
     temp.push(`${t}${m}`);
   }
   temp.push('Daily Total');
@@ -224,14 +245,14 @@ function addStore() {
     return;
   }
 
-  let container = document.querySelector('main');
-  let blur = _('div');
-  let popup = _('div');
-  let form = _('form');
+  const container = document.querySelector('main');
+  const blur = _('div');
+  const popup = _('div');
+  const form = _('form');
   const fieldset = _('fieldset');
-  let ul = _('ul');
-  let submit = _('button');
-  let exit = _('button');
+  const ul = _('ul');
+  const submit = _('button');
+  const exit = _('button');
 
   blur.setAttribute('id', 'popup-blur');
   popup.setAttribute('id', 'popup');
@@ -286,12 +307,12 @@ function chooseStore() {
     return;
   }
 
-  let container = document.querySelector('main');
-  let blur = _('div');
-  let popup = _('div');
-  let exit = _('button');
-  let select = _('select');
-  let option = _('option');
+  const container = document.querySelector('main');
+  const blur = _('div');
+  const popup = _('div');
+  const exit = _('button');
+  const select = _('select');
+  const option = _('option');
   let store;
 
 
@@ -311,7 +332,7 @@ function chooseStore() {
   select.appendChild(option);
 
   for (store of stores) {
-    let option = _('option');
+    const option = _('option');
     option.setAttribute('value', `${store.name}`);
     option.innerHTML = store.name;
     select.appendChild(option);
@@ -357,10 +378,10 @@ function input() {
 
 // helper function to add an input element
 function addUpdateField(container, value) {
-  let li = _('li');
-  let label = _('label');
-  let input = _('input');
-  let store = lookup.get($('store-select').value);
+  const li = _('li');
+  const label = _('label');
+  const input = _('input');
+  const store = lookup.get($('store-select').value);
 
   if ($(`${value}-container`)) {
     container.removeChild($(`${value}-container`));
@@ -458,4 +479,39 @@ function placeOrder(event) {
   const state = form.querySelector('select').value;
   const comments = form.querySelector('textarea').value;
   new Order(first, last, street, city, state, zip, phone, email, comments, type, qty);
+}
+
+function initialStorage() {
+  localStorage.setObject('stores', stores);
+  localStorage.setObject('lookup', lookup);
+  localStorage.setItem('totalHourlySales', totalHourlySales);
+  localStorage.setItem('totalHourlyStaff', totalHourlyStaff);
+}
+
+function storeStore() {
+
+}
+
+function storeOrders() {
+
+}
+
+function storeLD() {
+
+}
+
+function getstores() {
+  localStorage.getObject('stores');
+}
+
+function getLookup() {
+  localStorage.getObject('lookup');
+}
+
+function getTtlSales() {
+  localStorage.getItem('totalHourlySales');
+}
+
+function getTtlStaff() {
+  localStorage.getItem('totalHourlyStaff');
 }

@@ -292,11 +292,11 @@ table > tr:last-of-type > :not(:first-child) {
 }
 
 #popup {
-  height: 100px;
-  width: 300px;
+  height: 200px;
+  width: 400px;
   border: 4px solid var(--banner-col);
   border-radius: 24px;
-  padding: 48px;
+  padding: 24px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -354,6 +354,14 @@ table > tr:last-of-type > :not(:first-child) {
 #order-form li {
   display: flex;
   justify-content: space-between;
+}
+
+#order-form fieldset {
+  background-color: lightgrey;
+}
+
+#order-form legend {
+  background-color: lightgrey;
 }
 
 #addresses {
