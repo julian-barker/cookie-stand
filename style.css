@@ -124,7 +124,7 @@ table {
 
 th, td {
   width: 80px;
-  border: 1px solid var(--main-font-col);
+  border: 1px solid hsl(0 0% 15%);;
   border-collapse: collapse;
   background-color: var(--main-bg-col);
 }
@@ -226,7 +226,7 @@ fieldset {
   background-color: var(--table-bg);
 }
 
-tr :first-child {
+tr:not(:first-child) :first-child {
   width: 140px;
   background-color: var(--table-column1-col);
   font-weight: 600;
@@ -235,7 +235,8 @@ tr :first-child {
 #sales-table tr > td:last-child {
   width: fit-content;
   min-width: 120px;
-  background-color: var(--table-totals-col)
+  background-color: var(--table-totals-col);
+  font-weight: 600;
 }
 
 thead th {
@@ -244,12 +245,12 @@ thead th {
 
 table > tr:last-of-type > :not(:first-child) {
   background-color: var(--table-totals-col);
-  /* color: rgb(28, 28, 28); */
+  font-weight: 600;
 }
 
 #sales-table tr:last-of-type > :last-child {
   background-color: var(--table-grandTotal-col);
-  /* color: rgb(28, 28, 28); */
+  font-weight: 700;
 }
 
 #params-container {
