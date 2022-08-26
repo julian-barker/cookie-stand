@@ -10,8 +10,8 @@ html {
   --main-bg-col: hsl(222 52% 95%);
   --main-font-col: hsl(200 5% 15%);
   --hf-font-col: hsl(200 5% 15%);
-  --banner-col: hsl(190 80% 60%);
-  --accent-font-col: hsl(30 90% 45%);
+  --banner-col: hsl(180 69% 43%);
+  --accent-font-col: hsl(30 96% 51%);
   --table-bg: hsl(15 40% 85%);
   --table-font-col: hsl(200 5% 15%);
   --table-totals-col: hsl(200 50% 85%);
@@ -26,8 +26,8 @@ html {
 html.dark {
   --main-bg-col: hsl(222 25% 15%);
   --main-font-col: hsl(30 40% 80%);
-  --banner-col: hsl(190 80% 60%);
-  --accent-font-col: hsl(30 90% 45%);
+  /* --banner-col: hsl(190 80% 60%);
+  --accent-font-col: hsl(30 90% 45%); */
   --table-bg: hsl(0 0% 15%);
   --table-font-col: hsl(240 5% 80%);
   --table-totals-col: hsl(200 50% 15%);
@@ -93,7 +93,7 @@ header, footer {
 
 header {
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   justify-content: space-between;
   align-items: center;
 }
@@ -142,13 +142,18 @@ td {
 
 a {
   transition: 100ms;
+  color: hsl(180 45% 37%);
 }
 
 a:hover {
   font-size: 1.1rem;
 }
 
-img {
+a:visited {
+  color: hsl(16 96% 48%);
+}
+
+img:not(.static) {
   filter: brightness(var(--img-brt));
 }
 
@@ -197,17 +202,28 @@ fieldset {
   cursor: pointer;
 }
 
-#hero {
+.hero {
   max-width: 70%;
   margin-top: 48px;
   margin-bottom:48px;
-  flex-grow: 0;
+  position: relative;
+  /* flex-grow: 0; */
+}
+
+.static {
+  position: absolute;
+  z-index: 1;
+  background: var(--main-bg-col);
+}
+
+.static:hover {
+  opacity: 0;
 }
 
 #about {
   width: 65%;
   margin-top: 48px;
-  margin-bottom: 48px;
+  margin-bottom: 200px;
   font-size: 2rem;
 }
 
