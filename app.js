@@ -76,7 +76,7 @@ const storePrototype = {
   renderStores(body) {
     const stats = _('div');
     stats.setAttribute('id', `stats-${this.name}`);
-    stats.innerHTML += `<h3>${this.name}</h3>`;
+    stats.innerHTML += `<h4>${this.name}</h4>`;
     stats.innerHTML += `<p>High (cust/hr): ${this.max}</p>`;
     stats.innerHTML += `<p>Low (cust/hr): ${this.min}</p>`;
     stats.innerHTML += `<p>Avg Purchase: ${this.avg}</p>`;

@@ -46,7 +46,7 @@ ul {
   list-style-type: none;
 }
 
-h1, h2 {
+h1, h2, h3 {
   font-family: 'Raleway';
   margin-top: 24px;
   margin-bottom: 24px;
@@ -54,17 +54,21 @@ h1, h2 {
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: 4rem;
 }
 
 h2 {
-  font-size: 1.5rem;
+  font-size: 3rem;
 }
 
 h3 {
+  font-size: 1.5rem;
+}
+
+h4 {
   font-family: 'Raleway';
-  margin-top: 8px;
-  margin-bottom: 8px;
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 
 body {
@@ -204,6 +208,7 @@ fieldset {
   width: 65%;
   margin-top: 48px;
   margin-bottom: 48px;
+  font-size: 2rem;
 }
 
 .table-container {
@@ -247,10 +252,19 @@ table > tr:last-of-type > :not(:first-child) {
   /* color: rgb(28, 28, 28); */
 }
 
+#params-container {
+  max-width: 90vw;
+}
+
 #stats-body {
-  width: 90%;
+  width: 100%;
   display: flex;
+  flex-flow: wrap;
   justify-content: space-around;
+}
+
+#stats-body > * {
+  margin: 16px;
 }
 
 #choose-store {
@@ -306,7 +320,7 @@ table > tr:last-of-type > :not(:first-child) {
   margin-left: -4px;
   border: 4px gray solid;
   cursor: pointer;
-  transition: 200ms;
+  transition: 100ms;
   filter: grayscale();
 
 }
